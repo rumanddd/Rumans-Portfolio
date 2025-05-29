@@ -170,11 +170,12 @@ section {
 }
 
 #profile .section__pic-container img{
-  width: 300px !important;
+  width: 400px !important;
   height: 400px !important;
   clip-path: circle();
   background-position: 40% 90% !important;
   background-size: cover !important;
+  background-image: linear-gradient(to bottom, rgb(25, 25, 25), rgb(80, 80, 80)) !important;
 }
 
 .about-pic{
