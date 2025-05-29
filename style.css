@@ -170,8 +170,8 @@ section {
 }
 
 #profile .section__pic-container img{
-  width: 400px !important;
-  height: 400px !important;
+  width: 300px !important;
+  height: 300px !important;
   clip-path: circle();
   background-position: 40% 90% !important;
   background-size: cover !important;
@@ -272,6 +272,7 @@ section {
 
 #about {
   position: relative;
+  margin-top: 5rem;
 }
 
 .about-containers {

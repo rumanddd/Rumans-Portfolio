@@ -93,9 +93,7 @@
   }
   .section__pic-container {
     display: block;
-    width: 150px;
-    height: 150px;
-    margin-bottom: 14rem;
+    margin-bottom: 4rem;
 }
 
   .section_text {
