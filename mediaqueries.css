@@ -40,7 +40,8 @@
   .section__pic-container {
     width: 275px;
     height: 275px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 6rem;
+    align-self: center;
   }
   .about-containers {
     margin-top: 0;
@@ -53,8 +54,12 @@
     height: 40vh;
   }
   #profile {
-    height: 83vh;
+    height: auto;
     margin-bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   article {
     font-size: 1rem;
@@ -87,10 +92,17 @@
     text-align: center;
   }
   .section__pic-container {
-    width: auto;
-    height: 46vw;
-    justify-content: center;
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 14rem;
+}
+
+  .section_text {
+    margin-top: 200px;
+    margin-top: 20rem;
   }
+
   .section__text__p2 {
     font-size: 1.25rem;
   }
