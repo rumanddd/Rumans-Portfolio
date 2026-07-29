@@ -44,10 +44,11 @@
     <section id="profile">
       <div class="hero-grid reveal">
         <div class="hero-content">
-          <p class="eyebrow">Frontend Developer — Owner of
-            <img src="./assets/forma-mark.png" alt="" class="eyebrow-logo" />
-            Forma
-          </p>
+          <p class="eyebrow">Frontend Developer</p>
+          <div class="studio-badge">
+            <img src="./assets/forma-mark.png" alt="" class="studio-badge-logo" />
+            <span class="studio-badge-text">Owner of <strong>Forma</strong></span>
+          </div>
           <h1 class="title">Ruman Dhaliwal</h1>
           <p class="hero-tagline">I design and build fast, considered interfaces — and help businesses integrate AI and automate the busywork, from restaurant launches to product showcases.</p>
           <div class="btn-container">
@@ -106,9 +107,21 @@
             </div>
           </div>
           <div class="certificates reveal">
-            <div class="certificate-plate"><img src="./assets/UI-UX.png" alt="UI-UX Certificate" /></div>
-            <div class="certificate-plate"><img src="./assets/frontend-course.png" alt="Frontend Course Certificate" /></div>
-            <div class="certificate-plate"><img src="./assets/masterd.png" alt="Masterd Certificate" /></div>
+            <div class="certificate-plate">
+              <button type="button" class="certificate-trigger" onclick="openLightbox('./assets/UI-UX.png', 'UI-UX Certificate')">
+                <img src="./assets/UI-UX.png" alt="UI-UX Certificate" />
+              </button>
+            </div>
+            <div class="certificate-plate">
+              <button type="button" class="certificate-trigger" onclick="openLightbox('./assets/frontend-course.png', 'Frontend Course Certificate')">
+                <img src="./assets/frontend-course.png" alt="Frontend Course Certificate" />
+              </button>
+            </div>
+            <div class="certificate-plate">
+              <button type="button" class="certificate-trigger" onclick="openLightbox('./assets/masterd.png', 'Masterd Certificate')">
+                <img src="./assets/masterd.png" alt="Masterd Certificate" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -334,6 +347,14 @@
       </nav>
       <p>Copyright &#169; 2026 Ruman Dhaliwal All Rights Reserved.</p>
     </footer>
+
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Certificate preview" onclick="if (event.target === this) closeLightbox()">
+      <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Close preview">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img id="lightbox-img" src="" alt="" />
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
