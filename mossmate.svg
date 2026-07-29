@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MossMate cover art: modular living-moss wall panels on warm bone background">
+  <defs>
+    <linearGradient id="mm-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#efe9da"/>
+      <stop offset="100%" stop-color="#e2dac5"/>
+    </linearGradient>
+    <linearGradient id="mm-panel-a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7f9b6f"/>
+      <stop offset="100%" stop-color="#556b45"/>
+    </linearGradient>
+    <linearGradient id="mm-panel-b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5c7a4e"/>
+      <stop offset="100%" stop-color="#3c5334"/>
+    </linearGradient>
+    <linearGradient id="mm-panel-c" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8fae7a"/>
+      <stop offset="100%" stop-color="#65825b"/>
+    </linearGradient>
+    <filter id="mm-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <radialGradient id="mm-drop" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#eaf3e6" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#eaf3e6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#mm-bg)"/>
+
+  <g filter="url(#mm-soft)">
+    <rect x="120" y="120" width="300" height="230" rx="18" fill="url(#mm-panel-a)" transform="rotate(-2 270 235)"/>
+    <rect x="450" y="90" width="300" height="230" rx="18" fill="url(#mm-panel-b)" transform="rotate(1.5 600 205)"/>
+    <rect x="780" y="150" width="300" height="230" rx="18" fill="url(#mm-panel-c)" transform="rotate(-1 930 265)"/>
+    <rect x="180" y="410" width="300" height="230" rx="18" fill="url(#mm-panel-c)" transform="rotate(1 330 525)"/>
+    <rect x="520" y="430" width="300" height="230" rx="18" fill="url(#mm-panel-a)" transform="rotate(-1.5 670 545)"/>
+    <rect x="850" y="400" width="300" height="230" rx="18" fill="url(#mm-panel-b)" transform="rotate(2 1000 515)"/>
+  </g>
+
+  <g fill="url(#mm-drop)">
+    <circle cx="300" cy="230" r="26"/>
+    <circle cx="640" cy="540" r="18"/>
+    <circle cx="930" cy="260" r="14"/>
+  </g>
+</svg>

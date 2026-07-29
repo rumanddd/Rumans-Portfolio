@@ -4,24 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Portfolio</title>
+    <title>Ruman Dhaliwal — Frontend Developer</title>
+    <meta name="description" content="Ruman Dhaliwal — frontend developer and owner of Forma. Selected work: V9 Gastrobar, MossMate, and Velocity." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
   </head>
   <body>
     <nav id="desktop-nav">
-      <div class="logo">My Portfolio</div>
+      <div class="logo">RD<span class="logo-dot">.</span></div>
       <div>
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
+          <li><a href="#projects">Work</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
     <nav id="hamburger-nav">
-      <div class="logo">My Portfolio</div>
+      <div class="logo">RD<span class="logo-dot">.</span></div>
       <div class="hamburger-menu">
         <div class="hamburger-icon" onclick="toggleMenu()">
           <span></span>
@@ -31,266 +35,236 @@
         <div class="menu-links">
           <li><a href="#about" onclick="toggleMenu()">About</a></li>
           <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
+          <li><a href="#projects" onclick="toggleMenu()">Work</a></li>
           <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
         </div>
       </div>
     </nav>
+
     <section id="profile">
-      <div class="section__pic-container">
-        <img src="./assets/image.png" alt="Ruman Dhaliwal profile picture"/>
-      </div>
-      <div class="section__text">
-        <p class="section__text__p1">Hello, I'm</p>
-        <h1 class="title">Ruman Dhaliwal</h1>
-        <p class="section__text__p2">Frontend Developer and Owner of Forma</p>
-        <div class="btn-container">
-          <button
-            class="btn btn-color-2"
-            onclick="window.open('./assets/resume-ruman.pdf')"
-          >
-            Download CV
-          </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
-            Contact Info
-          </button>
+      <div class="hero-grid reveal">
+        <div class="hero-content">
+          <p class="eyebrow">Frontend Developer — Owner, Forma</p>
+          <h1 class="title">Ruman Dhaliwal</h1>
+          <p class="hero-tagline">I design and build fast, considered interfaces — from restaurant launches to product showcases.</p>
+          <div class="btn-container">
+            <button class="btn btn-color-1" onclick="location.href='./#projects'">View Work</button>
+            <button class="btn btn-color-2" onclick="window.open('./assets/resume-ruman.pdf')">Download CV</button>
+          </div>
+          <div id="socials-container">
+            <img
+              src="./assets/linkedin.png"
+              alt="My LinkedIn profile"
+              class="icon"
+              onclick="location.href='https://linkedin.com/in/rumanddd'"
+            />
+            <img
+              src="./assets/github.png"
+              alt="My Github profile"
+              class="icon"
+              onclick="location.href='https://github.com/rumanddd'"
+            />
+          </div>
         </div>
-        <div id="socials-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="My LinkedIn profile"
-            class="icon"
-            onclick="location.href='https://linkedin.com/in/rumanddd'"
-          />
-          <img
-            src="./assets/github.png"
-            alt="My Github profile"
-            class="icon"
-            onclick="location.href='https://github.com/in/rumanddd'"
-          />
+        <div class="status-plate">
+          <div class="status-row">
+            <span class="status-label">Role</span>
+            <span class="status-value">Frontend Developer</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Studio</span>
+            <span class="status-value">Forma</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Stack</span>
+            <span class="status-value">HTML · CSS · JS · TS</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Focus</span>
+            <span class="status-value">UI / UX &amp; Frontend Builds</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Contact</span>
+            <span class="status-value">rumanddd@gmail.com</span>
+          </div>
         </div>
       </div>
     </section>
+
     <section id="about">
       <p class="section__text__p1">Get To Know More</p>
       <h1 class="title">About Me</h1>
       <div class="section-container">
         <div class="about-details-container">
-          <div class="about-containers">
+          <div class="about-containers reveal">
             <div class="details-container">
-              <img
-                src="./assets/experience.png"
-                alt="Experience icon"
-                class="icon"
-              />
+              <svg class="icon icon-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5C4 7.11929 5.11929 6 6.5 6H17.5C18.8807 6 20 7.11929 20 8.5V17C20 18.1046 19.1046 19 18 19H6C4.89543 19 4 18.1046 4 17V8.5Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 6V5.5C9 4.67157 9.67157 4 10.5 4H13.5C14.3284 4 15 4.67157 15 5.5V6" stroke="currentColor" stroke-width="1.5"/><path d="M4 12.5C6.5 13.8333 17.5 13.8333 20 12.5" stroke="currentColor" stroke-width="1.5"/></svg>
               <h3>Experience</h3>
               <p>2+ years <br />Frontend Development</p>
             </div>
             <div class="details-container">
-              <img
-                src="./assets/education.png"
-                alt="Education icon"
-                class="icon"
-              />
+              <svg class="icon icon-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3L2 8L12 13L22 8L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 10.5V16C6 16 8.5 18 12 18C15.5 18 18 16 18 16V10.5" stroke="currentColor" stroke-width="1.5"/><path d="M22 8V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
               <h3>Education</h3>
-              <p>Frontend Developer<br />&<br/>Mobile App Developer Certificate</p>
+              <p>Frontend Developer<br />&amp;<br />Mobile App Developer Certificate</p>
             </div>
           </div>
-          <div class="certificates">
-            <img src="./assets/UI-UX.png" alt="UI-UX Certificate">
-            <img src="./assets/frontend-course.png" alt="Frontend Course Certificate">
-            <img src="./assets/masterd.png" alt="Masterd Certificate">
+          <div class="certificates reveal">
+            <div class="certificate-plate"><img src="./assets/UI-UX.png" alt="UI-UX Certificate" /></div>
+            <div class="certificate-plate"><img src="./assets/frontend-course.png" alt="Frontend Course Certificate" /></div>
+            <div class="certificate-plate"><img src="./assets/masterd.png" alt="Masterd Certificate" /></div>
           </div>
         </div>
       </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#experience'"
-      />
+      <button class="scroll-arrow" onclick="location.href='./#experience'" aria-label="Scroll to Experience">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </section>
+
     <section id="experience">
       <p class="section__text__p1">Explore My</p>
       <h1 class="title">Experience</h1>
       <div class="experience-details-container">
-        <div class="about-containers">
+        <div class="about-containers reveal">
           <div class="details-container">
             <h2 class="experience-sub-title">Frontend Development</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>HTML</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>CSS</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>JavaScript</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>TypeScript</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Material UI</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-            </div>
+            <ul class="skill-list">
+              <li class="skill-row">
+                <span class="skill-name">HTML</span>
+                <span class="skill-level" style="--pct: 100%" aria-label="Experienced">Experienced</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">CSS</span>
+                <span class="skill-level" style="--pct: 100%" aria-label="Experienced">Experienced</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-level" style="--pct: 40%" aria-label="Basic">Basic</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">TypeScript</span>
+                <span class="skill-level" style="--pct: 40%" aria-label="Basic">Basic</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">Material UI</span>
+                <span class="skill-level" style="--pct: 60%" aria-label="Intermediate">Intermediate</span>
+              </li>
+            </ul>
           </div>
           <div class="details-container">
             <h2 class="experience-sub-title">Visual Development</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Design</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>UI</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>UX</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Git</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-            </div>
+            <ul class="skill-list">
+              <li class="skill-row">
+                <span class="skill-name">Design</span>
+                <span class="skill-level" style="--pct: 100%" aria-label="Experienced">Experienced</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">UI</span>
+                <span class="skill-level" style="--pct: 60%" aria-label="Intermediate">Intermediate</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">UX</span>
+                <span class="skill-level" style="--pct: 60%" aria-label="Intermediate">Intermediate</span>
+              </li>
+              <li class="skill-row">
+                <span class="skill-name">Git</span>
+                <span class="skill-level" style="--pct: 60%" aria-label="Intermediate">Intermediate</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#projects'"
-      />
+      <button class="scroll-arrow" onclick="location.href='./#projects'" aria-label="Scroll to Work">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </section>
+
     <section id="projects">
       <p class="section__text__p1">Browse My Recent</p>
-      <h1 class="title">Projects</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-1.jpg"
-                alt="Project 1"
-                class="project-img"
-              />
+      <h1 class="title">Selected Work</h1>
+      <div class="work-list">
+        <article class="work-item reveal">
+          <div class="work-media">
+            <img src="./assets/projects/v9.svg" alt="V9 Gastrobar cover art" />
+          </div>
+          <div class="work-info">
+            <div class="work-header">
+              <p class="work-meta">V9 Gastrobar — 2026</p>
+              <h3 class="work-title">Open-flame kitchen, late-night bar</h3>
             </div>
-            <h2 class="experience-sub-title project-title">Project One</h2>
-            <div class="btn-container">
+            <div class="work-details">
+              <p class="work-desc">A single-page site for a coal-grill kitchen and bar, built around a live ember canvas animation and scroll-reveal menu sections.</p>
+              <ul class="work-tags">
+                <li>Canvas Animation</li>
+                <li>Scroll Reveal</li>
+                <li>Vanilla JS</li>
+              </ul>
+              <div class="work-links">
+                <a href="https://rumanddd.github.io/v9-website/" target="_blank" rel="noopener noreferrer" class="work-link">Visit site ↗</a>
+                <a href="https://github.com/rumanddd/v9-website" target="_blank" rel="noopener noreferrer" class="work-link">View code ↗</a>
+              </div>
             </div>
           </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-2.jpg"
-                alt="Project 2"
-                class="project-img"
-              />
+        </article>
+
+        <article class="work-item reveal">
+          <div class="work-media">
+            <img src="./assets/projects/mossmate.svg" alt="MossMate cover art" />
+          </div>
+          <div class="work-info">
+            <div class="work-header">
+              <p class="work-meta">MossMate — Self-Watering Wall Art</p>
+              <h3 class="work-title">Modular living-moss wall panels</h3>
             </div>
-            <h2 class="experience-sub-title project-title">Project Two</h2>
+            <div class="work-details">
+              <p class="work-desc">Product site for a modular, self-watering moss panel — interconnecting tiles with a passive watering system and swappable frame finishes.</p>
+              <ul class="work-tags">
+                <li>E-commerce</li>
+                <li>Product Design</li>
+                <li>Vanilla JS</li>
+              </ul>
+              <div class="work-links">
+                <a href="https://rumanddd.github.io/MossMate-Website-main/" target="_blank" rel="noopener noreferrer" class="work-link">Visit site ↗</a>
+                <a href="https://github.com/rumanddd/MossMate-Website-main" target="_blank" rel="noopener noreferrer" class="work-link">View code ↗</a>
+              </div>
             </div>
           </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-3.jpg"
-                alt="Project 3"
-                class="project-img"
-              />
+        </article>
+
+        <article class="work-item reveal">
+          <div class="work-media">
+            <img src="./assets/projects/velocity.svg" alt="Velocity cover art" />
+          </div>
+          <div class="work-info">
+            <div class="work-header">
+              <p class="work-meta">Velocity — High-End Vehicle</p>
+              <h3 class="work-title">Cinematic car dealership intro</h3>
             </div>
-            <h2 class="experience-sub-title project-title">Project Three</h2>
+            <div class="work-details">
+              <p class="work-desc">A dealership marketing site with a procedurally-generated 3D car and cinematic intro sequence, with graceful fallbacks for reduced motion and no WebGL.</p>
+              <ul class="work-tags">
+                <li>Three.js</li>
+                <li>WebGL</li>
+                <li>ES Modules</li>
+              </ul>
+              <div class="work-links">
+                <a href="https://rumanddd.github.io/High-End-Vehicle-Website-Test/" target="_blank" rel="noopener noreferrer" class="work-link">Visit site ↗</a>
+                <a href="https://github.com/rumanddd/High-End-Vehicle-Website-Test" target="_blank" rel="noopener noreferrer" class="work-link">View code ↗</a>
+              </div>
             </div>
           </div>
-        </div>
+        </article>
       </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#contact'"
-      />
+      <button class="scroll-arrow" onclick="location.href='./#contact'" aria-label="Scroll to Contact">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </section>
+
     <section id="contact">
       <p class="section__text__p1">Get in Touch</p>
       <h1 class="title">Contact Me</h1>
-      <div class="contact-info-upper-container">
+      <div class="contact-info-upper-container reveal">
         <div class="contact-info-container">
-          <img
-            src="./assets/email.png"
-            alt="Email icon"
-            class="icon contact-icon email-icon"
-          />
+          <svg class="icon icon-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6H20V18H4V6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 6L12 13L20 6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
           <p><a href="mailto:rumanddd@gmail.com">rumanddd@gmail.com</a></p>
         </div>
         <div class="contact-info-container">
@@ -299,22 +273,23 @@
             alt="LinkedIn icon"
             class="icon contact-icon"
           />
-          <p><a href="https://www.linkedin.com/in/rumanddd">LinkedIn</a></p>
+          <p><a href="https://www.linkedin.com/in/rumanddd" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
         </div>
       </div>
     </section>
+
     <footer>
       <nav>
         <div class="nav-links-container">
           <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#projects">Work</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
       </nav>
-      <p>Copyright &#169; 2025 Ruman Dhaliwal All Rights Reserved.</p>
+      <p>Copyright &#169; 2026 Ruman Dhaliwal All Rights Reserved.</p>
     </footer>
     <script src="script.js"></script>
   </body>
