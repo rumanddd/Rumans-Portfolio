@@ -289,12 +289,20 @@ a {
 }
 
 .hero-content .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--ff-mono);
   font-size: 0.85rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 1.5rem;
+}
+
+.eyebrow-logo {
+  height: 1.4rem;
+  width: auto;
 }
 
 .hero-content .title {
@@ -316,13 +324,27 @@ a {
   margin-top: 2rem;
 }
 
-#socials-container .icon {
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   border: 1px solid var(--hairline-strong);
+  color: var(--text);
   transition: all 250ms ease;
 }
 
-#socials-container .icon:hover {
+.social-btn svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+  color: var(--bg);
+  background: var(--accent);
   border-color: var(--accent);
   transform: translateY(-3px);
 }
@@ -518,17 +540,48 @@ a {
   overflow: hidden;
   border: 1px solid var(--hairline);
   background: var(--bg-alt);
+  box-shadow: 0 30px 60px -32px rgba(var(--proj-glow, 0, 0, 0), 0.55);
+  transition: box-shadow 400ms ease, transform 400ms ease;
+}
+
+.work-item:hover,
+.work-item:focus-within {
+  box-shadow: 0 40px 80px -30px rgba(var(--proj-glow, 0, 0, 0), 0.8);
+  transform: translateY(-4px);
 }
 
 .work-media {
+  position: relative;
   aspect-ratio: 16 / 8;
   overflow: hidden;
+}
+
+.work-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 100% at 85% 0%,
+    rgba(var(--proj-glow, 0, 0, 0), 0.35) 0%,
+    rgba(var(--proj-glow, 0, 0, 0), 0) 55%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  transition: opacity 400ms ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.work-item:hover .work-media::before,
+.work-item:focus-within .work-media::before {
+  opacity: 1;
 }
 
 .work-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   display: block;
   transition: transform 500ms ease;
 }
@@ -708,9 +761,15 @@ footer p {
   }
 
   .work-media img,
+  .work-media::before,
   .work-details,
+  .work-item,
   .scroll-arrow,
   #socials-container .icon {
     transition: none;
+  }
+
+  .work-item:hover {
+    transform: none;
   }
 }

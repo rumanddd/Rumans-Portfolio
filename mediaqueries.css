@@ -7,6 +7,15 @@
   }
 }
 
+@media screen and (max-width: 1100px) {
+  #experience .about-containers {
+    flex-wrap: wrap;
+  }
+  #experience .details-container {
+    flex-basis: 100%;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .hero-grid {
     grid-template-columns: 1fr;
