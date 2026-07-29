@@ -44,6 +44,11 @@
   .certificates {
     grid-template-columns: repeat(2, 1fr);
   }
+  .work-list .work-item:nth-child(1),
+  .work-list .work-item:nth-child(2),
+  .work-list .work-item:nth-child(3) {
+    width: 88%;
+  }
 }
 
 @media screen and (max-width: 640px) {
@@ -77,6 +82,20 @@
   }
   .skill-level::before {
     width: 2.5rem;
+  }
+  .work-list .work-item:nth-child(1),
+  .work-list .work-item:nth-child(2),
+  .work-list .work-item:nth-child(3) {
+    width: 100%;
+    align-self: stretch;
+    margin-top: 0;
+    transform: none;
+  }
+  .work-list .work-item:nth-child(1):hover,
+  .work-list .work-item:nth-child(1):focus-within,
+  .work-list .work-item:nth-child(2):hover,
+  .work-list .work-item:nth-child(2):focus-within {
+    transform: none;
   }
   .work-media {
     aspect-ratio: 4 / 3;
