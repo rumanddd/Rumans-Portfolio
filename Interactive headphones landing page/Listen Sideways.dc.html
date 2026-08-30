@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper,#F1ECE3); color: var(--body,#12224F); font-family: Archivo, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--ink,#1436C8); text-decoration: none; }
+  a:hover { color: var(--accent,#E8531C); }
+  @keyframes spin360 { to { transform: rotate(360deg); } }
+  @keyframes marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1);} 50% { opacity:.35; transform: scale(.75);} }
+  ::selection { background: var(--ink,#1436C8); color: var(--paper,#F1ECE3); }
+</style>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;height:3px;width:100%;z-index:60;background:var(--line-soft,rgba(20,54,200,.12))">
+  <div ref="{{ progressRef }}" style="height:100%;width:0%;background:var(--accent,#E8531C)"></div>
+</div>
+
+<div style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px 28px;mix-blend-mode:multiply">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:14px;height:14px;border-radius:50%;border:3px solid var(--accent,#E8531C)"></div>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink,#1436C8)">Open Listening Club</span>
+  </div>
+  <div style="display:flex;gap:26px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase">
+    <a href="#session">Session</a><a href="#details">Details</a><a href="#seats">Seats</a>
+  </div>
+</div>
+
+<section ref="{{ heroRef }}" style="position:relative;min-height:100vh;overflow:hidden;padding:0 28px 64px 28px;box-sizing:border-box;will-change:transform,opacity">
+  <div style="position:absolute;left:96px;top:0;bottom:0;width:1px;background:var(--line,rgba(20,54,200,.25))"></div>
+
+  <div style="position:absolute;left:28px;top:104px;bottom:48px;display:flex;flex-direction:column;gap:20px;align-items:flex-start;justify-content:space-between">
+    <div style="width:9px;height:9px;border-radius:50%;background:var(--ink,#1436C8)"></div>
+    <div style="writing-mode:vertical-rl;transform:rotate(180deg);display:flex;gap:22px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink,#1436C8);font-weight:500">
+      <span>Field Note 07</span><span>Open Listening Club</span>
+    </div>
+    <div style="width:52px;height:1px;background:var(--line,rgba(20,54,200,.25))"></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.7;letter-spacing:.06em;color:var(--ink,#1436C8)">THU / 19 SEP<br>19:30–21:00</div>
+    <div style="width:9px;height:9px;border-radius:50%;background:var(--ink,#1436C8);animation:pulseDot 2.6s ease-in-out infinite;animation-play-state:var(--anim-state,running)"></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.7;letter-spacing:.06em;color:var(--ink,#1436C8)">TUNE BEYOND<br>THE OBVIOUS</div>
+  </div>
+
+  <div style="position:absolute;top:0;bottom:0;right:0;width:min(46vw,760px);pointer-events:none;display:flex;align-items:center;justify-content:center;perspective:1200px">
+    <div ref="{{ stageRef }}" style="position: relative; width: 100%; height: min(88vh,860px); display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; will-change: transform; flex-direction: row">
+      <div ref="{{ shadowRef }}" style="position:absolute;left:14%;bottom:14%;width:62%;height:90px;border-radius:50%;background:radial-gradient(ellipse at center, rgba(18,34,79,.34), transparent 70%);filter:blur(14px)"></div>
+      <img src="uploads/26-08-28-14_43_31-da8is4v01qmefgkqf1l0.png" alt="Transparent blue studio headphones with an orange coiled cable" style="position: relative; z-index: 40; object-fit: contain; filter: drop-shadow(28px 34px 30px rgba(18,34,79,.35))" />
+    </div>
+  </div>
+
+  
+
+  <div style="position:absolute;left:132px;right:28px;bottom:22px;display:flex;justify-content:flex-end;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted,rgba(18,34,79,.72))">Scroll to tune</div>
+<div style="position:relative;padding-left:132px;padding-right:min(46vw,760px);padding-top:min(18vh,190px);max-width:1500px">
+    <div ref="{{ badgeRef }}" style="position:relative;z-index:3;width:132px;height:132px;margin-bottom:28px;pointer-events:none">
+      <svg viewBox="0 0 180 180" style="width:100%;height:100%;animation:spin360 var(--spin-dur,26s) linear infinite;animation-play-state:var(--anim-state,running)">
+        <defs><path id="badgeArc" d="M90,90 m-66,0 a66,66 0 1,1 132,0 a66,66 0 1,1 -132,0" fill="none"></path></defs>
+        <text style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;fill:var(--ink,#1436C8)">
+          <textPath href="#badgeArc" startOffset="0%" textLength="406" lengthAdjust="spacingAndGlyphs">LISTEN CLOSE · THINK WIDE · SHAPE &amp; CHAOS ·</textPath>
+        </text>
+        <circle cx="90" cy="90" r="4" fill="var(--accent,#E8531C)"></circle>
+      </svg>
+    </div>
+
+    <div ref="{{ titleRef }}" style="position:relative;z-index:2">
+      <h1 style="margin:0;font-weight:900;font-size:calc(var(--scale,1) * clamp(48px,7.6vw,150px));line-height:var(--display-lh,.82);letter-spacing:-.04em;color:var(--ink,#1436C8);text-transform:uppercase;text-wrap:balance">
+        <span style="display:block">Listen</span>
+        <span style="display:block">Sideways</span>
+      </h1>
+    </div>
+
+    <div style="position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:24px;margin-top:40px;max-width:700px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;letter-spacing:.05em;color:var(--ink,#1436C8)">
+      <div><div style="opacity:.55;margin-bottom:6px">FEATURED SET</div>TIDELINE / 42 MIN</div>
+      <div><div style="opacity:.55;margin-bottom:6px">CAPACITY</div>12 SEATS ONLY</div>
+      <div><div style="opacity:.55;margin-bottom:6px">WHERE</div>HALO YARD, ROOM 04<br>NOVA CITY 1042</div>
+      <div style="display:flex;align-items:flex-start">
+        <a href="#seats" data-glow="" style="position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border:1px solid var(--ink,#1436C8);border-radius:999px;color:var(--ink,#1436C8);font-size:12px;letter-spacing:.2em;text-transform:uppercase" style-hover="background:var(--ink,#1436C8);color:var(--paper,#F1ECE3)">
+          <span data-glow-layer="" style="position:absolute;inset:-40%;opacity:0;background:radial-gradient(circle at 50% 50%, rgba(232,83,28,.55), transparent 60%);transition:opacity .3s;pointer-events:none"></span>
+          <span style="position:relative">Claim a seat</span>
+        </a>
+      </div>
+    </div>
+  </div></section>
+
+<div style="border-top:1px solid var(--line,rgba(20,54,200,.25));border-bottom:1px solid var(--line,rgba(20,54,200,.25));overflow:hidden;background:var(--band,#1436C8)">
+  <div style="display:flex;width:200%;animation:marquee var(--marquee-dur,26s) linear infinite;animation-play-state:var(--anim-state,running)">
+    <div style="display:flex;gap:48px;width:50%;flex:none;padding:16px 24px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--band-fg,#F1ECE3);white-space:nowrap">
+      <span>Field Note 07</span><span style="color:var(--accent,#E8531C)">●</span><span>Tune beyond the obvious</span><span style="color:var(--accent,#E8531C)">●</span><span>Thu 19 Sep 19:30</span><span style="color:var(--accent,#E8531C)">●</span><span>12 seats only</span><span style="color:var(--accent,#E8531C)">●</span><span>Halo Yard Room 04</span><span style="color:var(--accent,#E8531C)">●</span>
+    </div>
+    <div style="display:flex;gap:48px;width:50%;flex:none;padding:16px 24px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--band-fg,#F1ECE3);white-space:nowrap" aria-hidden="true">
+      <span>Field Note 07</span><span style="color:var(--accent,#E8531C)">●</span><span>Tune beyond the obvious</span><span style="color:var(--accent,#E8531C)">●</span><span>Thu 19 Sep 19:30</span><span style="color:var(--accent,#E8531C)">●</span><span>12 seats only</span><span style="color:var(--accent,#E8531C)">●</span><span>Halo Yard Room 04</span><span style="color:var(--accent,#E8531C)">●</span>
+    </div>
+  </div>
+</div>
+
+<section id="session" style="padding:calc(var(--scale,1) * 120px) 28px 40px 28px;max-width:1360px;margin:0 auto">
+  <div style="display:flex;align-items:baseline;gap:20px;margin-bottom:56px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent,#E8531C)">01 / Runsheet</span>
+    <div style="flex:1;height:1px;background:var(--line,rgba(20,54,200,.25))"></div>
+  </div>
+  <div data-reveal-group="" style="border-top:1px solid var(--line,rgba(20,54,200,.25))">
+    <sc-for list="{{ runsheet }}" as="row" hint-placeholder-count="4">
+      <div data-reveal="" data-glow="" style="position:relative;overflow:hidden;display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:center;padding:calc(var(--scale,1) * 30px) 20px;border-bottom:1px solid var(--line,rgba(20,54,200,.25));opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),background .35s" style-hover="background:var(--line-soft,rgba(20,54,200,.12))">
+        <span data-glow-layer="" style="position:absolute;inset:-50%;opacity:0;background:radial-gradient(circle at 50% 50%, rgba(232,83,28,.35), transparent 55%);transition:opacity .35s;pointer-events:none"></span>
+        <div style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;color:var(--accent,#E8531C)">{{ row.time }}</div>
+        <div style="position:relative;font-size:calc(var(--scale,1) * clamp(24px,3.4vw,46px));font-weight:800;letter-spacing:-.02em;text-transform:uppercase;color:var(--ink,#1436C8)">{{ row.title }}</div>
+        <div style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--muted,rgba(18,34,79,.72));text-align:right;max-width:280px">{{ row.note }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="details" style="padding:calc(var(--scale,1) * 100px) 28px;max-width:1360px;margin:0 auto">
+  <div style="display:flex;align-items:baseline;gap:20px;margin-bottom:48px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent,#E8531C)">02 / Details</span>
+    <div style="flex:1;height:1px;background:var(--line,rgba(20,54,200,.25))"></div>
+  </div>
+  <div data-reveal-group="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+    <sc-for list="{{ cards }}" as="card" hint-placeholder-count="3">
+      <div data-reveal="" data-glow="" style="position:relative;overflow:hidden;padding:34px 30px 40px 30px;border:1px solid var(--line,rgba(20,54,200,.25));border-radius:4px;background:var(--card,rgba(255,255,255,.35));opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),border-color .35s" style-hover="border-color:var(--ink,#1436C8)">
+        <span data-glow-layer="" style="position:absolute;inset:-60%;opacity:0;background:radial-gradient(circle at 50% 50%, rgba(232,83,28,.45), transparent 55%);transition:opacity .35s;pointer-events:none"></span>
+        <div style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#E8531C);margin-bottom:26px">{{ card.kicker }}</div>
+        <div style="position:relative;font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;color:var(--ink,#1436C8);line-height:1.05">{{ card.title }}</div>
+        <div style="position:relative;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.8;color:var(--muted,rgba(18,34,79,.72))">{{ card.body }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="seats" style="position:relative;padding:120px 28px 100px 28px;background:var(--band,#1436C8);color:var(--band-fg,#F1ECE3);overflow:hidden">
+  <svg viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);width:100%;height:340px;opacity:.35">
+    <path ref="{{ waveRef }}" d="M0,150 Q150,150 300,150 T600,150 T900,150 T1200,150" fill="none" stroke="var(--accent,#E8531C)" stroke-width="2"></path>
+  </svg>
+  <div style="position:relative;max-width:1100px;margin:0 auto;text-align:center">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;opacity:.7">03 / Seats</div>
+    <h2 style="margin:26px 0 0 0;font-size:calc(var(--scale,1) * clamp(44px,9vw,140px));font-weight:900;line-height:var(--display-lh,.86);letter-spacing:-.04em;text-transform:uppercase">Twelve chairs.<br>One room.</h2>
+    <div style="margin-top:40px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+      <sc-for list="{{ seats }}" as="seat" hint-placeholder-count="12">
+        <div style="width:26px;height:26px;border-radius:50%;border:1px solid var(--onband-line,rgba(241,236,227,.55));display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px" style-hover="background:var(--accent,#E8531C);border-color:var(--accent,#E8531C)">{{ seat }}</div>
+      </sc-for>
+    </div>
+    <a href="#seats" data-glow="" style="position:relative;overflow:hidden;display:inline-flex;margin-top:48px;padding:20px 44px;border-radius:999px;background:var(--accent,#E8531C);color:var(--paper,#F1ECE3);font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:600" style-hover="background:var(--paper,#F1ECE3);color:var(--ink,#1436C8)">
+      <span data-glow-layer="" style="position:absolute;inset:-60%;opacity:0;background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.5), transparent 55%);transition:opacity .35s;pointer-events:none"></span>
+      <span style="position:relative">Request an invite</span>
+    </a>
+  </div>
+</section>
+
+<footer style="padding:56px 28px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink,#1436C8)">
+  <div style="display:flex;align-items:center;gap:10px"><div style="width:14px;height:14px;border-radius:50%;border:3px solid var(--accent,#E8531C)"></div>Open Listening Club</div>
+  <div>Halo Yard, Room 04 · Nova City 1042</div>
+  <div>Field Note 07</div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Still&quot;,&quot;Float&quot;,&quot;Kinetic&quot;],&quot;default&quot;:&quot;Kinetic&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Motion character&quot;},&quot;headphonesInFront&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Headphones in front&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Cream &amp; Cobalt&quot;,&quot;Ink Room&quot;,&quot;Solar Wash&quot;,&quot;Violet Ember&quot;,&quot;Ember &amp; Ice&quot;],&quot;default&quot;:&quot;Cream &amp; Cobalt&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Editorial&quot;,&quot;Poster&quot;],&quot;default&quot;:&quot;Poster&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Typographic density&quot;}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.stageRef = React.createRef();
+    this.titleRef = React.createRef();
+    this.badgeRef = React.createRef();
+    this.progressRef = React.createRef();
+    this.waveRef = React.createRef();
+    this.shadowRef = React.createRef();
+    this.heroRef = React.createRef();
+    this.mouse = { x: 0.5, y: 0.5 };
+    this.scrollY = 0;
+  }
+
+  renderVals() {
+    return {
+      stageRef: this.stageRef, titleRef: this.titleRef, badgeRef: this.badgeRef,
+      progressRef: this.progressRef, waveRef: this.waveRef, shadowRef: this.shadowRef, heroRef: this.heroRef,
+      seats: ['01','02','03','04','05','06','07','08','09','10','11','12'],
+      runsheet: [
+        { time: '19:30', title: 'Doors + calibration', note: 'Find your chair, set your level' },
+        { time: '19:45', title: 'Tideline', note: 'Featured set / 42 min / no intermission' },
+        { time: '20:35', title: 'Open floor', note: 'Bring one track, say nothing about it' },
+        { time: '21:00', title: 'Lights up', note: 'Field notes collected at the door' }
+      ],
+      cards: [
+        { kicker: 'Where', title: 'Halo Yard\nRoom 04', body: 'Nova City 1042. Enter from the yard side, follow the orange cable.' },
+        { kicker: 'When', title: 'Thu 19 Sep\n19:30 — 21:00', body: 'Arrive by 19:25. The room seals when the first set starts.' },
+        { kicker: 'How', title: 'Tune beyond\nthe obvious', body: 'Headphones provided. Phones off. Listening is the whole programme.' }
+      ]
+    };
+  }
+
+  componentDidMount() {
+    this.applyTheme();
+    this.initGlow();
+    this.initReveal();
+    this.revealTimer = setInterval(() => this.observeReveals(), 400);
+    this.initScroll();
+    this.initStage();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('mousemove', this.onMove);
+    window.removeEventListener('resize', this.onResize);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.revealTimer) clearInterval(this.revealTimer);
+  }
+
+  initGlow() {
+    this.onMove = (e) => {
+      this.mouse.x = e.clientX / window.innerWidth;
+      this.mouse.y = e.clientY / window.innerHeight;
+      document.querySelectorAll('[data-glow]').forEach((el) => {
+        const layer = el.querySelector('[data-glow-layer]');
+        if (!layer) return;
+        const r = el.getBoundingClientRect();
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top, Math.min(e.clientY, r.bottom));
+        const d = Math.hypot(e.clientX - cx, e.clientY - cy);
+        const reach = 260;
+        const k = Math.max(0, 1 - d / reach);
+        layer.style.opacity = String(k * k);
+        if (k > 0) {
+          const px = ((e.clientX - r.left) / r.width) * 100;
+          const py = ((e.clientY - r.top) / r.height) * 100;
+          layer.style.backgroundImage = 'radial-gradient(circle at ' + px + '% ' + py + '%, ' + (el.dataset.glowTint || 'rgba(232,83,28,.5)') + ', transparent 55%)';
+          el.style.boxShadow = '0 0 ' + (36 * k).toFixed(1) + 'px rgba(232,83,28,' + (0.45 * k).toFixed(3) + ')';
+        } else {
+          el.style.boxShadow = 'none';
+        }
+      });
+    };
+    window.addEventListener('mousemove', this.onMove, { passive: true });
+  }
+
+  initReveal() { this.observeReveals(); }
+
+  observeReveals() {
+    document.querySelectorAll('[data-reveal]:not([data-revealed])').forEach((el, i) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.88 && r.bottom > 0) {
+        el.style.transitionDelay = (i * 80) + 'ms';
+        el.style.opacity = '1'; el.style.transform = 'translateY(0)'; el.dataset.revealed = '1';
+      }
+    });
+  }
+
+  componentDidUpdate() { this.observeReveals(); this.applyTheme(); }
+
+  applyTheme() {
+    const r = document.documentElement.style;
+    const motion = this.props.motion ?? 'Still';
+    r.setProperty('--anim-state', 'running');
+    r.setProperty('--marquee-dur', motion === 'Kinetic' ? '14s' : '26s');
+    r.setProperty('--spin-dur', motion === 'Kinetic' ? '12s' : '26s');
+
+    const stage = this.stageRef.current;
+    if (stage) {
+      stage.style.zIndex = (this.props.headphonesInFront ?? true) ? '45' : '0';
+
+    }
+
+    const P = {
+      'Cream & Cobalt': { paper: '#F1ECE3', ink: '#1436C8', accent: '#E8531C', body: '#12224F', line: 'rgba(20,54,200,.25)', lineSoft: 'rgba(20,54,200,.12)', muted: 'rgba(18,34,79,.72)', band: '#1436C8', bandFg: '#F1ECE3', card: 'rgba(255,255,255,.35)', onbandLine: 'rgba(241,236,227,.55)' },
+      'Ink Room': { paper: '#0E1220', ink: '#DCE4FF', accent: '#FF6A2B', body: '#C6CFE8', line: 'rgba(220,228,255,.22)', lineSoft: 'rgba(220,228,255,.08)', muted: 'rgba(198,207,232,.7)', band: '#1B2CA6', bandFg: '#EEF2FF', card: 'rgba(220,228,255,.05)', onbandLine: 'rgba(238,242,255,.5)' },
+      'Solar Wash': { paper: '#FBE9D2', ink: '#7A1E12', accent: '#1436C8', body: '#5A2113', line: 'rgba(122,30,18,.25)', lineSoft: 'rgba(122,30,18,.1)', muted: 'rgba(90,33,19,.72)', band: '#E8531C', bandFg: '#FBE9D2', card: 'rgba(255,255,255,.32)', onbandLine: 'rgba(251,233,210,.6)' },
+      'Ember & Ice': { paper: '#8A3B0B', ink: '#BBD6F2', accent: '#F3B27A', body: '#D7E7F7', line: 'rgba(187,214,242,.28)', lineSoft: 'rgba(187,214,242,.1)', muted: 'rgba(215,231,247,.72)', band: '#BBD6F2', bandFg: '#5C2606', card: 'rgba(187,214,242,.08)', onbandLine: 'rgba(92,38,6,.45)' },
+      'Violet Ember': { paper: '#F3E9F2', ink: '#520051', accent: '#BD540F', body: '#3D0B3C', line: 'rgba(82,0,81,.24)', lineSoft: 'rgba(82,0,81,.09)', muted: 'rgba(61,11,60,.72)', band: '#520051', bandFg: '#F3E9F2', card: 'rgba(255,255,255,.34)', onbandLine: 'rgba(243,233,242,.55)' }
+    };
+    const p = P[this.props.palette] || P['Cream & Cobalt'];
+    r.setProperty('--paper', p.paper); r.setProperty('--ink', p.ink); r.setProperty('--accent', p.accent);
+    r.setProperty('--body', p.body); r.setProperty('--line', p.line); r.setProperty('--line-soft', p.lineSoft);
+    r.setProperty('--muted', p.muted); r.setProperty('--band', p.band); r.setProperty('--band-fg', p.bandFg);
+    r.setProperty('--card', p.card); r.setProperty('--onband-line', p.onbandLine);
+    document.body.style.background = p.paper;
+
+    const poster = this.props.density === 'Poster';
+    r.setProperty('--scale', poster ? '1.32' : '1');
+    r.setProperty('--display-lh', poster ? '.78' : '.84');
+  }
+
+  motionAmp() {
+    const m = this.props.motion ?? 'Still';
+    return m === 'Still' ? 0 : m === 'Kinetic' ? 2.1 : 1;
+  }
+
+  initScroll() {
+    this.onScroll = () => {
+      const y = window.scrollY;
+      this.scrollY = y;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (this.progressRef.current) this.progressRef.current.style.width = ((y / Math.max(1, max)) * 100).toFixed(2) + '%';
+      const sy = y / Math.max(1, window.innerHeight);
+      if (this.heroRef.current) {
+        this.heroRef.current.style.transform = 'translate3d(0,' + (sy * -220).toFixed(1) + 'px,0)';
+        this.heroRef.current.style.opacity = String(Math.max(0, 1 - sy * 1.15));
+      }
+      this.observeReveals();
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  initStage() {
+    const host = this.stageRef.current;
+    let t = 0;
+    const tick = () => {
+      this.raf = requestAnimationFrame(tick);
+      t += 0.006;
+      const sy = this.scrollY / Math.max(1, window.innerHeight);
+      const amp = this.motionAmp();
+      if (host && amp === 0) {
+        host.style.transform = 'none';
+      } else if (host) {
+        const ry = (Math.sin(t) * 5 + (this.mouse.x - 0.5) * 16 + sy * 26) * amp;
+        const rx = (Math.sin(t * 0.8) * 2.4 - (this.mouse.y - 0.5) * 10) * amp;
+        const ty = Math.sin(t * 1.4) * 10 * amp;
+        const sc = Math.max(0.72, 1 - sy * 0.18 * amp);
+        host.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg) rotate(' + (sy * 6 * amp).toFixed(2) + 'deg) scale(' + sc.toFixed(3) + ')';
+      }
+      if (this.shadowRef.current) {
+        const k = 1 + Math.sin(t * 1.4) * 0.06 * amp;
+        this.shadowRef.current.style.transform = 'scaleX(' + k.toFixed(3) + ')';
+        this.shadowRef.current.style.opacity = String(Math.max(0.15, 1 - sy * 0.6));
+      }
+      if (this.waveRef.current) {
+        let d = 'M0,150';
+        for (let x = 0; x <= 1200; x += 20) {
+          const y = 150 + Math.sin(x * 0.012 + t * 3) * 34 * Math.sin(x / 1200 * Math.PI);
+          d += ' L' + x + ',' + y.toFixed(1);
+        }
+        this.waveRef.current.setAttribute('d', d);
+      }
+    };
+    tick();
+  }
+}
+
+</script>
+</body>
+</html>
