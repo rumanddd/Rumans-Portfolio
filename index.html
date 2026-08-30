@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@300,400,500,600,700&amp;display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=zodiak@400,700&amp;display=swap">
 <style>
+  @media (hover: hover) and (pointer: fine) {
+    html, body, *, *::before, *::after { cursor: none !important; }
+  }
   body { margin:0; overflow-x:clip; background:#000000; background-attachment:fixed; }
   a { color:#f4f2ee; text-decoration:none; }
   a:hover { color:#f4f2ee; }
@@ -567,7 +570,18 @@ class Component extends DCLogic {
     this.onHud();
 
     const audio = this.preloadAudioRef.current;
-    if (audio) { audio.volume = 0.85; const ap = audio.play(); if (ap && ap.catch) ap.catch(() => {}); }
+    if (audio) {
+      audio.volume = 0.85;
+      const tryPlayIntro = () => {
+        if (!audio || !audio.paused || this.preloadDone) return;
+        const ap = audio.play();
+        if (ap && ap.then) ap.then(() => { this.audioStartedAt = performance.now(); }).catch(() => {});
+        else this.audioStartedAt = performance.now();
+      };
+      tryPlayIntro();
+      ['pointerdown', 'pointermove', 'keydown', 'touchstart', 'wheel'].forEach((ev) =>
+        window.addEventListener(ev, tryPlayIntro, { once: true, passive: true }));
+    }
 
     const FLICKER_MS = 500, COUNT_MS = 3900;
     const t0 = performance.now() + FLICKER_MS, dur = COUNT_MS;
@@ -979,10 +993,16 @@ class Component extends DCLogic {
       if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = '100%';
       const a = this.preloadAudioRef.current;
       if (a && !a.paused) {
-        const fade = setInterval(() => {
-          a.volume = Math.max(0, a.volume - 0.06);
-          if (a.volume <= 0.01) { clearInterval(fade); a.pause(); }
-        }, 60);
+        const MIN_PLAY = 4500;
+        const startFade = () => {
+          const fade = setInterval(() => {
+            a.volume = Math.max(0, a.volume - 0.06);
+            if (a.volume <= 0.01) { clearInterval(fade); a.pause(); }
+          }, 60);
+        };
+        const played = this.audioStartedAt ? (performance.now() - this.audioStartedAt) : MIN_PLAY;
+        if (played >= MIN_PLAY) startFade();
+        else setTimeout(startFade, MIN_PLAY - played);
       }
       this.sfx('open');
       this.setState({ loaded: true });
