@@ -19,6 +19,12 @@
   @keyframes nav-in { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:none; } }
   html.lenis, html.lenis body { height:auto; }
   .lenis.lenis-smooth { scroll-behavior:auto !important; }
+  @keyframes neon-strike { 0%{opacity:0;text-shadow:none;} 6%{opacity:1;text-shadow:0 0 34px rgba(226,232,240,0.9);} 10%{opacity:0.1;} 16%{opacity:0.95;} 22%{opacity:0.15;} 30%{opacity:1;text-shadow:0 0 44px rgba(226,232,240,1);} 38%{opacity:0.25;} 46%{opacity:0.9;} 54%{opacity:0.3;} 64%{opacity:1;} 72%{opacity:0.45;} 82%{opacity:1;} 90%{opacity:0.7;} 100%{opacity:1;text-shadow:0 0 26px rgba(226,232,240,0.35);} }
+  @keyframes cyber-flicker { 0%,100%{opacity:0.85;} 8%{opacity:0.25;} 10%{opacity:0.9;} 18%{opacity:0.4;} 20%{opacity:1;} 42%{opacity:0.9;} 44%{opacity:0.15;} 46%{opacity:0.95;} 70%{opacity:0.55;} 72%{opacity:1;} 88%{opacity:0.3;} 90%{opacity:0.9;} }
+  @keyframes bar-pulse { 0%,100%{filter:drop-shadow(0 0 6px rgba(226,232,240,0.7));} 50%{filter:drop-shadow(0 0 16px rgba(226,232,240,1));} }
+  @keyframes spin360 { to { transform: rotate(360deg); } }
+  @keyframes marquee-run { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.3; transform:scale(0.72); } }
   @keyframes cue-pulse { 0%,100%{opacity:0.35;transform:translateY(0);} 50%{opacity:1;transform:translateY(4px);} }
   @keyframes hud-blink { 0%,100%{opacity:0.9;} 50%{opacity:0.25;} }
   @keyframes ember-rise { 0%{transform:translate(0,0) scale(0.4);opacity:0;} 10%{opacity:1;} 75%{transform:translate(10px,-70%) scale(1.3);opacity:0.95;} 100%{transform:translate(-8px,-115%) scale(0.5);opacity:0;} }
@@ -91,11 +97,14 @@
 
   <div style="{{ preloaderStyle }}" aria-hidden="true">
     <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;">
-      <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(244,242,238,0.4);">/// Forma Studio</span>
-      <span ref="{{ preloadRef }}" style="font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:104px;line-height:1;color:#f4f2ee;font-variant-numeric:tabular-nums;">000</span>
-      <div style="width:180px;height:1px;background:rgba(244,242,238,0.16);overflow:hidden;">
-        <div ref="{{ preloadBarRef }}" style="width:0%;height:100%;background:#f4f2ee;"></div>
+      <span style="position:relative;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(244,242,238,0.75);text-shadow:0 0 12px rgba(226,232,240,0.55);animation:cyber-flicker 2.4s steps(1,end) infinite;">/// Forma Studio</span>
+      <span style="display:flex;align-items:baseline;gap:10px;">
+        <span ref="{{ preloadRef }}" style="font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:104px;line-height:1;color:#f4f2ee;font-variant-numeric:tabular-nums;text-shadow:0 0 26px rgba(226,232,240,0.35);animation:neon-strike 500ms steps(1,end) 1 both;">000</span>
+      </span>
+      <div style="position:relative;width:260px;height:2px;background:rgba(244,242,238,0.14);box-shadow:0 0 22px rgba(226,232,240,0.12);">
+        <div ref="{{ preloadBarRef }}" style="width:0%;height:100%;background:linear-gradient(90deg, rgba(226,232,240,0.5) 0%, #ffffff 100%);box-shadow:0 0 12px rgba(226,232,240,0.9), 0 0 30px rgba(226,232,240,0.55);animation:bar-pulse 1.6s ease-in-out infinite;"></div>
       </div>
+      <audio ref="{{ preloadAudioRef }}" src="uploads/Portfolio Loading Music.opus" preload="auto"></audio>
     </div>
   </div>
 
@@ -108,6 +117,10 @@
   <div ref="{{ spotlightRef }}" aria-hidden="true" style="position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 600ms ease; top: 7px"></div>
   <div ref="{{ cursorRingRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;z-index:3000;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(244,242,238,0.85);border-radius:50%;pointer-events:none;mix-blend-mode:difference;opacity:0;transition:width 260ms ease,height 260ms ease,margin 260ms ease,opacity 300ms ease;"></div>
   <div ref="{{ cursorDotRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;z-index:3000;width:4px;height:4px;margin:-2px 0 0 -2px;background:#f4f2ee;border-radius:50%;pointer-events:none;mix-blend-mode:difference;opacity:0;"></div>
+
+  <div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;height:2px;z-index:1200;background:rgba(244,242,238,0.08);">
+    <div ref="{{ progressRef }}" style="width:0%;height:100%;background:#f4f2ee;"></div>
+  </div>
 
   <div id="nav-bar" style="position:sticky;top:0;z-index:900;background:rgba(11,11,11,0.55);backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%);border-bottom:1px solid rgba(244,242,238,0.1);">
     <nav id="site-nav" style="opacity:0;animation:nav-in 1000ms cubic-bezier(0.16,0.84,0.24,1) 1.75s forwards;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:16px 40px;">
@@ -141,7 +154,7 @@
         <p style="display:flex;align-items:center;gap:18px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11px;letter-spacing:0.4em;text-transform:uppercase;color:#9a958e;margin:0 0 30px;"><span>Portfolio</span><span aria-hidden="true" style="display:inline-block;width:56px;height:1px;background:rgba(244,242,238,0.3);"></span></p>
         <div data-reveal="" data-reveal-delay="1750" style="opacity:0;transform:translateY(26px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);"><div class="hero-badge" style="display:inline-flex;align-items:stretch;border:1px solid rgba(244,242,238,0.22);border-radius:2px;margin-bottom:40px;background:rgba(244,242,238,0.03);">
           <span style="display:inline-flex;align-items:center;justify-content:center;width:56px;background:rgba(244,242,238,0.06);border-right:1px solid rgba(244,242,238,0.22);"><img src="assets/forma-mark-black.png" alt="" style="height:26px;width:auto;filter:invert(1);"></span>
-          <span style="display:inline-flex;align-items:center;padding:15px 24px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;color:#e7e4de;">Available for new projects</span>
+          <span style="display:inline-flex;align-items:center;padding:15px 24px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;color:#e7e4de;">Available for new projects<span aria-hidden="true" style="width:8px;height:8px;margin-left:14px;border-radius:50%;background:#f4f2ee;animation:pulse-dot 2.6s ease-in-out infinite;"></span></span>
         </div></div>
         <h1 data-reveal="" class="hero-title" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:400;color:#f4f2ee;font-size:104px;line-height:1.02;letter-spacing:0;margin:0 0 26px;">Ruman<br>Dhaliwal</h1>
         <p data-reveal="" data-reveal-delay="1900" style="opacity:0;transform:translateY(24px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13px;letter-spacing:0.42em;text-transform:uppercase;color:#9a958e;margin:0 0 30px;">Frontend Developer</p>
@@ -154,20 +167,44 @@
           <span>Scroll</span>
           <span aria-hidden="true" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(244,242,238,0.28);border-radius:50%;font-size:13px;animation:cue-pulse 2.6s ease-in-out infinite;">↓</span>
         </div>
+        <div aria-hidden="true" style="width:132px;height:132px;margin-top:34px;pointer-events:none;">
+          <svg viewBox="0 0 180 180" style="width:100%;height:100%;animation:spin360 var(--spin-dur,26s) linear infinite;">
+            <defs><path id="formaArc" d="M90,90 m-66,0 a66,66 0 1,1 132,0 a66,66 0 1,1 -132,0" fill="none"></path></defs>
+            <circle cx="90" cy="90" r="66" fill="none" stroke="rgba(244,242,238,0.14)" stroke-width="1"></circle>
+            <text style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11px;letter-spacing:0.2em;fill:rgba(244,242,238,0.62);">
+              <textPath href="#formaArc">FORMA · FRONTEND DEVELOPER · FORMA · 2026 · </textPath>
+            </text>
+            <circle cx="90" cy="90" r="3" fill="rgba(244,242,238,0.5)"></circle>
+          </svg>
+        </div>
       </div>
       <div class="hero-sep" aria-hidden="true" style="width:1px;background:linear-gradient(to bottom, transparent 0%, rgba(244,242,238,0.22) 12%, rgba(244,242,238,0.22) 88%, transparent 100%);"></div>
       <div class="hero-card" data-reveal="" data-reveal-delay="2250" style="opacity:0;transform:translateY(30px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);color:#f4f2ee;border:1px solid rgba(244,242,238,0.14);box-shadow:0 30px 70px -40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(244,242,238,0.08);border-radius:2px;padding:0;overflow:hidden;font-family:'Switzer','Helvetica Neue',sans-serif;">
-        <div aria-hidden="true" style="width:100%;aspect-ratio:16/10;background-image:url('uploads/Gemini_Generated_Image_xw5fbxw5fbxw5fbx.jpg');background-size:cover;background-position:center;border-bottom:1px solid rgba(244,242,238,0.14);"></div>
+        <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#0b0b0b;border-bottom:1px solid rgba(244,242,238,0.14);">
+          <iframe src="https://rumanddd.github.io/Listen-Sideways/" title="Listen Sideways landing page, live preview" loading="lazy" scrolling="no" style="position:absolute;top:0;left:0;width:400%;height:400%;border:0;transform:scale(0.25);transform-origin:0 0;"></iframe>
+          <span aria-hidden="true" style="position:absolute;left:12px;top:12px;display:flex;align-items:center;gap:7px;padding:6px 11px;border:1px solid rgba(244,242,238,0.28);border-radius:2px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);font-family:'Switzer','Helvetica Neue',sans-serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(244,242,238,0.8);"><span style="width:5px;height:5px;border-radius:50%;background:#f4f2ee;animation:pulse-dot 2.6s ease-in-out infinite;"></span>Live</span>
+        </div>
         <div class="hero-card-body" style="padding:14px 32px 26px;">
-        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Project</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">Savore Restaurant Website</span></div>
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Project</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">Listen Sideways</span></div>
         <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Type</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">Website Design &amp; Development</span></div>
-        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Tools</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">HTML, CSS, JS, TS, CD</span></div>
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Tools</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">HTML, CSS, JS, TS, React, CD</span></div>
         <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Year</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">2026</span></div>
         <button type="button" data-magnetic="" onClick="{{ onViewWork }}" style="display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:0;background:none;border:none;cursor:pointer;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:#f4f2ee;" style-hover="color:#9a958e;">View Project <span aria-hidden="true">→</span></button>
         </div>
       </div>
     </div>
   </section>
+
+  <div aria-hidden="true" style="position:relative;border-top:1px solid rgba(244,242,238,0.14);border-bottom:1px solid rgba(244,242,238,0.14);overflow:hidden;">
+    <div style="display:flex;width:max-content;animation:marquee-run var(--marquee-dur,30s) linear infinite;">
+      <div style="display:flex;align-items:center;gap:56px;flex:none;padding:16px 28px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.34em;text-transform:uppercase;color:rgba(244,242,238,0.7);white-space:nowrap;">
+        <span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:56px;flex:none;padding:16px 28px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.34em;text-transform:uppercase;color:rgba(244,242,238,0.7);white-space:nowrap;">
+        <span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span>
+      </div>
+    </div>
+  </div>
 
   <section id="about" style="max-width:1200px;margin:0 auto;padding:112px 40px 80px;position:relative;">
     <p style="{{ eyebrowStyle }}">Get To Know More</p>
@@ -195,17 +232,17 @@
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.22em;text-transform:uppercase;color:#9a958e;margin:0 0 6px;">Credentials</p>
-          <button type="button" onClick="{{ openCertLightbox1 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox1 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
             <img src="assets/UI-UX.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
             <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">UI / UX Design Certificate</span>
             <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
           </button>
-          <button type="button" onClick="{{ openCertLightbox2 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox2 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
             <img src="assets/frontend-course.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
             <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">Frontend Development Course</span>
             <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
           </button>
-          <button type="button" onClick="{{ openCertLightbox3 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox3 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
             <img src="assets/masterd.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
             <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">Masterd Mobile App Developer</span>
             <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
@@ -339,6 +376,9 @@
   </section>
 
   <section id="contact" style="max-width:1200px;margin:0 auto;padding:112px 40px 128px;position:relative;">
+    <svg aria-hidden="true" viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:34px;width:100%;height:110px;opacity:0.45;pointer-events:none;">
+      <path ref="{{ waveRef }}" d="M0,150" fill="none" stroke="rgba(244,242,238,0.5)" stroke-width="1"></path>
+    </svg>
     <p style="{{ eyebrowStyle }}">Get in Touch</p>
     <h1 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:66px;letter-spacing:-0.01em;margin:0 0 36px;">Contact Me</h1>
     <div class="contact-wrap" style="display:flex;flex-wrap:wrap;justify-content:center;border-radius:3px;border:1px solid rgba(244,242,238,0.14);background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);margin:32px auto 0;padding:8px;width:fit-content;">
@@ -377,11 +417,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{
-  &quot;accentMood&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Ink&quot;, &quot;options&quot;: [&quot;Ink&quot;, &quot;Graphite&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot; },
-  &quot;workLayout&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Scattered&quot;, &quot;options&quot;: [&quot;Scattered&quot;, &quot;Grid&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Work section&quot; },
-  &quot;energy&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Wild&quot;, &quot;options&quot;: [&quot;Wild&quot;, &quot;Calm&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Motion&quot; }
-}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Kinetic&quot;,&quot;options&quot;:[&quot;Still&quot;,&quot;Balanced&quot;,&quot;Kinetic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;accentMood&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Ink&quot;,&quot;options&quot;:[&quot;Ink&quot;,&quot;Graphite&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;workLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Scattered&quot;,&quot;options&quot;:[&quot;Scattered&quot;,&quot;Grid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Work section&quot;},&quot;energy&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Wild&quot;,&quot;options&quot;:[&quot;Wild&quot;,&quot;Calm&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
 // Each particle: [edge, pos%, dx, dy, delay, dur, variant]
 const V9_PARTICLES = [
   ['top',8,-8,-26,0,2.6,'ember'],['top',26,6,-30,0.5,3,'ash'],['top',44,-5,-24,1.1,2.4,'ember'],['top',62,7,-32,0.3,3.2,'ash'],['top',80,-6,-27,1.6,2.8,'ember'],
@@ -437,8 +473,8 @@ const PALETTES = {
 
 const WORK_DATA = [
   { glow: '239,125,61', particleType: 'v9', particleList: V9_PARTICLES, img: 'assets/projects/v9.png', imgAlt: 'V9 Gastrobar homepage screenshot', meta: 'V9 Gastrobar — 2026', title: 'Open-flame kitchen, late-night bar', desc: 'A single-page site for a coal-grill kitchen and bar, built around a live ember canvas animation and scroll-reveal menu sections.', tags: ['Canvas Animation', 'Scroll Reveal', 'Vanilla JS'], siteUrl: 'https://rumanddd.github.io/v9-website/', codeUrl: 'https://github.com/rumanddd/v9-website', rotate: -1.2, width: '68%', align: 'flex-start', marginTop: 0 },
-  { glow: '47,107,79', particleType: 'moss', particleList: MOSS_PARTICLES, img: 'assets/projects/mossmate.png', imgAlt: 'MossMate homepage screenshot', meta: 'MossMate — Self-Watering Wall Art', title: 'Modular living-moss wall panels', desc: 'Product site for a modular, self-watering moss panel — interconnecting tiles with a passive watering system and swappable frame finishes.', tags: ['E-commerce', 'Product Design', 'Vanilla JS'], siteUrl: 'https://rumanddd.github.io/MossMate-Website-main/', codeUrl: 'https://github.com/rumanddd/MossMate-Website-main', rotate: 1, width: '68%', align: 'flex-end', marginTop: -16 },
-  { glow: '224,72,63', particleType: 'velocity', particleList: VELOCITY_PARTICLES, img: 'assets/projects/velocity.png', imgAlt: 'Velocity homepage screenshot', meta: 'Velocity — High-End Vehicle', title: 'Cinematic car dealership intro', desc: 'A dealership marketing site with a procedurally-generated 3D car and cinematic intro sequence, with graceful fallbacks for reduced motion and no WebGL.', tags: ['Three.js', 'WebGL', 'ES Modules'], siteUrl: 'https://rumanddd.github.io/High-End-Vehicle-Website-Test/', codeUrl: 'https://github.com/rumanddd/High-End-Vehicle-Website-Test', rotate: 0, width: '62%', align: 'center', marginTop: 8 },
+  { glow: '176,141,87', particleType: 'moss', particleList: MOSS_PARTICLES, img: 'uploads/Gemini_Generated_Image_mayr8bmayr8bmayr.jpg', imgAlt: 'Savore restaurant website homepage screenshot', meta: 'Savore — Restaurant Website', title: 'A refined, immersive dining showcase', desc: 'A restaurant site built around atmosphere — full-bleed interior photography, a cinematic featured-project carousel and a quiet editorial type system.', tags: ['Web Design', 'Art Direction', 'Vanilla JS'], siteUrl: 'https://claude.ai/code/artifact/76d362ea-a5a8-4337-a8d4-801ab1bd818e?org=db02bb0e-59ca-492e-b4f9-b0509ca08f11', codeUrl: 'https://claude.ai/code/artifact/76d362ea-a5a8-4337-a8d4-801ab1bd818e?org=db02bb0e-59ca-492e-b4f9-b0509ca08f11', rotate: 1, width: '68%', align: 'flex-end', marginTop: -16 },
+  { glow: '20,54,200', particleType: 'velocity', particleList: VELOCITY_PARTICLES, img: 'assets/projects/listen-sideways.png', imgAlt: 'Listen Sideways homepage screenshot', meta: 'Listen Sideways — Open Listening Club', title: 'Editorial landing page for a listening club', desc: 'A poster-style landing page for an open listening session, built around a mouse-reactive 3D product stage, proximity glow and a scrolling field-note marquee.', tags: ['React', 'Interaction Design', 'Web Audio'], siteUrl: 'https://rumanddd.github.io/Listen-Sideways/', codeUrl: 'https://github.com/rumanddd/Listen-Sideways', rotate: 0, width: '62%', align: 'center', marginTop: 8 },
 ];
 
 const SKILL_GROUPS = [
@@ -452,6 +488,8 @@ class Component extends DCLogic {
   videoRef = React.createRef();
   preloadRef = React.createRef();
   preloadBarRef = React.createRef();
+  preloadCaretRef = React.createRef();
+  preloadAudioRef = React.createRef();
   hudScrollRef = React.createRef();
   hudSizeRef = React.createRef();
   scrubCanvasRef = React.createRef();
@@ -468,6 +506,10 @@ class Component extends DCLogic {
   bgLinesSlowRef = React.createRef();
   bgLinesFastRef = React.createRef();
   bgBandRef = React.createRef();
+  progressRef = React.createRef();
+  waveRef = React.createRef();
+  mouseNX = 0.5;
+  mouseNY = 0.5;
   pxBgRef = React.createRef();
   pxMidRef = React.createRef();
   pxLinesRef = React.createRef();
@@ -511,11 +553,7 @@ class Component extends DCLogic {
         const pct = Math.round(Math.min(1, Math.max(0, window.scrollY / max)) * 100);
         if (this.hudScrollRef.current) this.hudScrollRef.current.textContent = String(pct).padStart(3, '0') + '%';
         if (this.hudSizeRef.current) this.hudSizeRef.current.textContent = window.innerWidth + 'x' + window.innerHeight;
-        const y = window.scrollY;
-        const mod = (v, m) => ((v % m) + m) % m;
-        if (this.bgLinesSlowRef.current) this.bgLinesSlowRef.current.style.transform = 'translate3d(0,' + (-mod(y * 0.08, 340)).toFixed(1) + 'px,0)';
-        if (this.bgLinesFastRef.current) this.bgLinesFastRef.current.style.transform = 'translate3d(0,' + (-mod(y * 0.22, 1040)).toFixed(1) + 'px,0)';
-        if (this.bgBandRef.current) this.bgBandRef.current.style.transform = 'translate3d(0,' + (-(y * 0.16)).toFixed(1) + 'px,0)';
+        this.writeParallax();
     };
     this.onHud = () => {
       if (this.hudPending) return;
@@ -523,12 +561,18 @@ class Component extends DCLogic {
       requestAnimationFrame(() => { this.hudPending = false; this.writeHud(); });
     };
     this.writeHud();
+    setTimeout(() => { this.writeHud(); this.writeParallax(); }, 60);
     window.addEventListener('scroll', this.onHud, { passive: true });
     window.addEventListener('resize', this.onHud, { passive: true });
     this.onHud();
 
-    const t0 = performance.now(), dur = 1500;
+    const audio = this.preloadAudioRef.current;
+    if (audio) { audio.volume = 0.85; const ap = audio.play(); if (ap && ap.catch) ap.catch(() => {}); }
+
+    const FLICKER_MS = 500, COUNT_MS = 3900;
+    const t0 = performance.now() + FLICKER_MS, dur = COUNT_MS;
     const tick = (now) => {
+      if (now < t0) { this.preloadRaf = requestAnimationFrame(tick); return; }
       const p = Math.min(1, (now - t0) / dur);
       const eased = 1 - Math.pow(1 - p, 2.2);
       const n = Math.round(eased * 100);
@@ -538,7 +582,7 @@ class Component extends DCLogic {
       else { this.preloadRaf = null; this.finishPreload(280); }
     };
     this.preloadRaf = requestAnimationFrame(tick);
-    this.preloadFallback = setTimeout(() => this.finishPreload(0), 2200);
+    this.preloadFallback = setTimeout(() => this.finishPreload(0), 4600);
     this.startReveals();
 
     if (window.Lenis) {
@@ -546,7 +590,17 @@ class Component extends DCLogic {
       const lraf = (t) => { this.lenis.raf(t); this.lenisRaf = requestAnimationFrame(lraf); };
       this.lenisRaf = requestAnimationFrame(lraf);
     }
+    this.applyMotion();
     if (this.finePointer) this.initPointerFX();
+    this.initGlow();
+    this.initWave();
+    this.armWhoosh = () => {
+      if (this.state.soundOn) this.startWhoosh();
+      window.removeEventListener('pointerdown', this.armWhoosh);
+      window.removeEventListener('keydown', this.armWhoosh);
+    };
+    window.addEventListener('pointerdown', this.armWhoosh);
+    window.addEventListener('keydown', this.armWhoosh);
     this.initWorkFX();
     this.initScrub();
 
@@ -636,6 +690,192 @@ class Component extends DCLogic {
     if (kick && kick.then) kick.then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
   }
 
+  writeParallax() {
+    const y = window.scrollY;
+    const amp = this.motionAmp();
+    const mod = (v, m) => ((v % m) + m) % m;
+    const mx = (this.mouseNX - 0.5) * amp;
+    const my = (this.mouseNY - 0.5) * amp;
+    if (this.bgLinesSlowRef.current) this.bgLinesSlowRef.current.style.transform = 'translate3d(' + (mx * 26).toFixed(1) + 'px,' + (-mod(y * 0.08, 340) + my * 10).toFixed(1) + 'px,0)';
+    if (this.bgLinesFastRef.current) this.bgLinesFastRef.current.style.transform = 'translate3d(' + (mx * -48).toFixed(1) + 'px,' + (-mod(y * 0.22, 1040) + my * 22).toFixed(1) + 'px,0)';
+    if (this.bgBandRef.current) this.bgBandRef.current.style.transform = 'translate3d(' + (mx * 60).toFixed(1) + 'px,' + (-(y * 0.16) + my * 14).toFixed(1) + 'px,0)';
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (this.progressRef.current) this.progressRef.current.style.width = ((y / Math.max(1, max)) * 100).toFixed(2) + '%';
+
+    const sy = y / Math.max(1, window.innerHeight);
+    if (!this.heroCol) this.heroCol = document.querySelector('#profile .hero-grid > div:not(.hero-sep):not(.hero-card)');
+    if (!this.heroCard) this.heroCard = document.querySelector('#profile .hero-card');
+    if (this.heroCol && this.heroReady) {
+      this.heroCol.style.transform = 'translate3d(0,' + (sy * -170 * amp).toFixed(1) + 'px,0)';
+      this.heroCol.style.opacity = String(Math.max(0, 1 - sy * 1.15));
+    }
+    if (this.heroCard && this.heroReady) {
+      const ry = mx * 13, rx = -my * 9;
+      this.heroCard.style.transform = 'perspective(1100px) translate3d(0,' + (sy * -80 * amp).toFixed(1) + 'px,0) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg) scale(' + Math.max(0.86, 1 - sy * 0.09 * amp).toFixed(3) + ')';
+      this.heroCard.style.opacity = String(Math.max(0, 1 - sy * 1.05));
+    }
+  }
+
+  motionAmp() {
+    const m = this.props.motion ?? 'Balanced';
+    return m === 'Still' ? 0 : m === 'Kinetic' ? 1.9 : 1;
+  }
+
+  applyMotion() {
+    const m = this.props.motion ?? 'Balanced';
+    const r = document.documentElement.style;
+    r.setProperty('--marquee-dur', m === 'Kinetic' ? '16s' : m === 'Still' ? '60s' : '30s');
+    r.setProperty('--spin-dur', m === 'Kinetic' ? '13s' : m === 'Still' ? '60s' : '26s');
+  }
+
+  /* Cursor-proximity border glow (silver), ported from the headphones piece. */
+  initGlow() {
+    if (!this.finePointer) return;
+    const TINT = 'rgba(226,232,240,0.5)';
+    const REACH = 300;
+    const surfaces = Array.prototype.slice.call(document.querySelectorAll('.hero-card, .work-item, .skills-row > div, .cert-thumb, [data-magnetic]'));
+    surfaces.forEach((el) => {
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      const layer = document.createElement('span');
+      layer.setAttribute('aria-hidden', 'true');
+      layer.style.cssText = 'position:absolute;inset:0;opacity:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;transition:opacity 220ms ease;z-index:0;';
+      el.appendChild(layer);
+      el._glowLayer = layer;
+    });
+    const lines = Array.prototype.slice.call(document.querySelectorAll('.nav-links a, #contact a'));
+    this.onGlowMove = (e) => {
+      const amp = this.motionAmp();
+      surfaces.forEach((el) => {
+        const layer = el._glowLayer;
+        if (!layer) return;
+        if (amp === 0) { layer.style.opacity = '0'; el.style.boxShadow = ''; return; }
+        const r = el.getBoundingClientRect();
+        if (!r.width) return;
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top, Math.min(e.clientY, r.bottom));
+        const k = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / REACH);
+        layer.style.opacity = (k * k * 0.9).toFixed(3);
+        if (k > 0) {
+          const px = ((e.clientX - r.left) / r.width) * 100;
+          const py = ((e.clientY - r.top) / r.height) * 100;
+          layer.style.backgroundImage = 'radial-gradient(circle at ' + px.toFixed(1) + '% ' + py.toFixed(1) + '%, ' + TINT + ', transparent 62%)';
+          el.style.boxShadow = '0 0 ' + (34 * k * k).toFixed(1) + 'px rgba(226,232,240,' + (0.3 * k * k).toFixed(3) + ')';
+        } else {
+          el.style.boxShadow = '';
+        }
+      });
+      lines.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (!r.width) return;
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top, Math.min(e.clientY, r.bottom));
+        const k = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / 180);
+        el.style.textShadow = k > 0 ? '0 0 ' + (14 * k * k).toFixed(1) + 'px rgba(226,232,240,' + (0.75 * k * k).toFixed(3) + ')' : '';
+      });
+    };
+    window.addEventListener('mousemove', this.onGlowMove, { passive: true });
+  }
+
+  /* Live sine waveform in the contact section. */
+  initWave() {
+    let t = 0;
+    const tick = () => {
+      this.waveRaf = requestAnimationFrame(tick);
+      const path = this.waveRef.current;
+      if (!path) return;
+      const amp = this.motionAmp();
+      t += 0.02 * (amp || 0.25);
+      let d = 'M0,150';
+      for (let x = 0; x <= 1200; x += 20) {
+        const y = 150 + Math.sin(x * 0.012 + t * 3) * 40 * Math.sin((x / 1200) * Math.PI) * (amp || 0.4);
+        d += ' L' + x + ',' + y.toFixed(1);
+      }
+      path.setAttribute('d', d);
+    };
+    tick();
+  }
+
+  /* Filtered white-noise whoosh whose gain + cutoff track pointer velocity. */
+  initWhoosh() {
+    if (this.whoosh || !this.finePointer) return null;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const ctx = new AC();
+    const len = Math.floor(ctx.sampleRate * 2);
+    const buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.99765 * b0 + w * 0.099;
+      b1 = 0.963 * b1 + w * 0.2965;
+      b2 = 0.57 * b2 + w * 1.0526;
+      data[i] = (b0 + b1 + b2 + w * 0.1848) * 0.16;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.loop = true;
+    const band = ctx.createBiquadFilter();
+    band.type = 'bandpass';
+    band.frequency.value = 420;
+    band.Q.value = 0.7;
+    const hp = ctx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = 220;
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    src.connect(band); band.connect(hp); hp.connect(gain); gain.connect(ctx.destination);
+    src.start();
+    this.whoosh = { ctx, gain, band, hp, level: 0 };
+    return this.whoosh;
+  }
+
+  startWhoosh() {
+    const w = this.initWhoosh();
+    if (!w) return;
+    if (w.ctx.state === 'suspended') w.ctx.resume();
+    if (this.whooshMove) return;
+    let lx = null, ly = null, lt = 0, vel = 0;
+    this.whooshMove = (e) => {
+      const now = performance.now();
+      if (lx !== null) {
+        const dt = Math.max(8, now - lt);
+        const d = Math.hypot(e.clientX - lx, e.clientY - ly);
+        vel = Math.max(vel, Math.min(1, (d / dt) / 3.2));
+      }
+      lx = e.clientX; ly = e.clientY; lt = now;
+      this.whooshVel = vel;
+      vel *= 0.86;
+    };
+    window.addEventListener('pointermove', this.whooshMove, { passive: true });
+    const tick = () => {
+      this.whooshRaf = requestAnimationFrame(tick);
+      const ww = this.whoosh;
+      if (!ww) return;
+      const target = this.state.soundOn ? (this.whooshVel || 0) : 0;
+      // fast attack, quick release so stopping the mouse silences it right away
+      ww.level += (target - ww.level) * (target > ww.level ? 0.35 : 0.22);
+      this.whooshVel = (this.whooshVel || 0) * 0.82;
+      const t = ww.ctx.currentTime;
+      ww.gain.gain.setTargetAtTime(Math.pow(ww.level, 1.6) * 0.085, t, 0.02);
+      ww.band.frequency.setTargetAtTime(380 + ww.level * 2600, t, 0.05);
+      ww.hp.frequency.setTargetAtTime(200 + ww.level * 700, t, 0.05);
+    };
+    tick();
+  }
+
+  stopWhoosh() {
+    if (this.whooshRaf) { cancelAnimationFrame(this.whooshRaf); this.whooshRaf = null; }
+    if (this.whooshMove) { window.removeEventListener('pointermove', this.whooshMove); this.whooshMove = null; }
+    if (this.whoosh) {
+      const t = this.whoosh.ctx.currentTime;
+      this.whoosh.gain.gain.setTargetAtTime(0, t, 0.04);
+      this.whoosh.level = 0;
+      setTimeout(() => { if (this.whoosh && !this.state.soundOn) this.whoosh.ctx.suspend(); }, 260);
+    }
+  }
+
   smoothTo(el) {
     if (this.lenis) this.lenis.scrollTo(el, { duration: 1.4 });
     else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
@@ -647,6 +887,8 @@ class Component extends DCLogic {
     let mx = -100, my = -100, rx = -100, ry = -100, sx = -100, sy = -100, seen = false, hoverEl = null;
     this.onPtrMove = (e) => {
       mx = e.clientX; my = e.clientY;
+      this.mouseNX = e.clientX / window.innerWidth;
+      this.mouseNY = e.clientY / window.innerHeight;
       if (!seen) { seen = true; if (ring) ring.style.opacity = '1'; if (dot) dot.style.opacity = '1'; if (spot) spot.style.opacity = '1'; }
     };
     this.onPtrOver = (e) => {
@@ -665,6 +907,7 @@ class Component extends DCLogic {
       sx += (mx - sx) * 0.06; sy += (my - sy) * 0.06;
       if (ring) ring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0)';
       if (dot) dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+      this.writeParallax();
       if (spot) spot.style.background = 'radial-gradient(520px at ' + sx.toFixed(0) + 'px ' + sy.toFixed(0) + 'px, rgba(244,242,238,0.055) 0%, rgba(244,242,238,0.018) 38%, transparent 68%)';
     };
     loop();
@@ -734,19 +977,37 @@ class Component extends DCLogic {
     const done = () => {
       if (this.preloadRef.current) this.preloadRef.current.textContent = '100';
       if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = '100%';
+      const a = this.preloadAudioRef.current;
+      if (a && !a.paused) {
+        const fade = setInterval(() => {
+          a.volume = Math.max(0, a.volume - 0.06);
+          if (a.volume <= 0.01) { clearInterval(fade); a.pause(); }
+        }, 60);
+      }
       this.sfx('open');
       this.setState({ loaded: true });
       this.startReveals();
+      this.revealSafety = setTimeout(() => {
+        document.querySelectorAll('[data-reveal]:not([data-revealed])').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.setAttribute('data-revealed', '1');
+        });
+      }, 1200);
+      setTimeout(() => {
+        this.heroReady = true;
+        [this.heroCol, this.heroCard].forEach((el) => { if (el) el.style.transition = 'none'; });
+        this.writeParallax();
+      }, 3600);
     };
     if (delay) this.preloadFinishTimer = setTimeout(done, delay); else done();
   }
 
   startReveals() {
-    if (this.revealsStarted) return;
-    this.revealsStarted = true;
-    const els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (this.io) { this.io.disconnect(); this.io = null; }
+    const els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]:not([data-revealed])'));
     if (!('IntersectionObserver' in window)) {
-      els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; el.setAttribute('data-revealed', '1'); });
       return;
     }
     this.io = new IntersectionObserver((entries) => {
@@ -754,21 +1015,30 @@ class Component extends DCLogic {
         if (!e.isIntersecting) return;
         e.target.style.opacity = '1';
         e.target.style.transform = 'none';
-        this.io.unobserve(e.target);
+        e.target.setAttribute('data-revealed', '1');
+        if (this.io) this.io.unobserve(e.target);
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
     els.forEach((el, i) => { const d = el.getAttribute('data-reveal-delay'); el.style.transitionDelay = (d ? d : (i % 3) * 110) + 'ms'; el.addEventListener('transitionend', () => { el.style.transitionDelay = '0ms'; }, { once: true }); this.io.observe(el); });
   }
 
   componentWillUnmount() {
+    this.preloadDone = false;
+    clearTimeout(this.revealSafety);
     if (this.preloadRaf) cancelAnimationFrame(this.preloadRaf);
     clearTimeout(this.preloadFallback);
     clearTimeout(this.preloadFinishTimer);
+    if (this.typeTimers) this.typeTimers.forEach(clearTimeout);
     if (this.scrubRaf) cancelAnimationFrame(this.scrubRaf);
     if (this.onScrubResize) window.removeEventListener('resize', this.onScrubResize);
     if (this.lenisRaf) cancelAnimationFrame(this.lenisRaf);
     if (this.lenis) this.lenis.destroy();
     if (this.ptrRaf) cancelAnimationFrame(this.ptrRaf);
+    if (this.waveRaf) cancelAnimationFrame(this.waveRaf);
+    this.stopWhoosh();
+    if (this.whoosh) { this.whoosh.ctx.close(); this.whoosh = null; }
+    if (this.armWhoosh) { window.removeEventListener('pointerdown', this.armWhoosh); window.removeEventListener('keydown', this.armWhoosh); }
+    if (this.onGlowMove) window.removeEventListener('mousemove', this.onGlowMove);
     if (this.onPtrMove) document.removeEventListener('pointermove', this.onPtrMove);
     if (this.onPtrOver) document.removeEventListener('pointerover', this.onPtrOver);
     if (this.workIo) this.workIo.disconnect();
@@ -829,7 +1099,7 @@ class Component extends DCLogic {
           transition: 'box-shadow 400ms ease, transform 400ms ease',
         },
         glowOverlayStyle: { display: 'none' },
-        imgStyle: { width: '100%', height: '100%', backgroundImage: `url(${w.img})`, backgroundSize: 'cover', backgroundPosition: 'top center', backgroundRepeat: 'no-repeat', display: 'block',  transform: isHover ? `scale(${scaleUp})` : 'scale(1)', transition: 'transform 500ms ease, filter 500ms ease' },
+        imgStyle: { width: '100%', height: '100%', backgroundImage: `url(${w.img})`, backgroundSize: w.fit || 'cover', backgroundPosition: w.fit ? 'center' : 'top center', backgroundRepeat: 'no-repeat', display: 'block',  transform: isHover ? `scale(${scaleUp})` : 'scale(1)', transition: 'transform 500ms ease, filter 500ms ease' },
         labelStyle: { position: 'absolute', left: 0, bottom: 0, zIndex: 3, background: 'rgba(11,11,11,0.5)', backdropFilter: 'blur(18px) saturate(130%)', color: '#f4f2ee', padding: '14px 20px', borderTop: '1px solid rgba(244,242,238,0.16)', borderRight: '1px solid rgba(244,242,238,0.16)', maxWidth: '80%' },
         panelStyle: {
           position: 'absolute', top: 0, bottom: 0, width: 320, zIndex: 2,
@@ -883,10 +1153,14 @@ class Component extends DCLogic {
       onSoundToggle: () => {
         const next = !this.state.soundOn;
         if (next) {
-          this.setState({ soundOn: true }, () => { if (this.ui) { this.ui.setEnabled(true); this.ui.play('toggle-on', { force: true }); } });
+          this.setState({ soundOn: true }, () => {
+            if (this.ui) { this.ui.setEnabled(true); this.ui.play('toggle-on', { force: true }); }
+            this.startWhoosh();
+          });
         } else {
           // audible confirmation first, then stop loops and mute for real
           if (this.ui) this.ui.play('toggle-off', { force: true });
+          this.stopWhoosh();
           this.stopLoops();
           setTimeout(() => { if (this.ui) { this.ui.stopAll(); this.ui.setEnabled(false); } }, 340);
           this.setState({ soundOn: false });
@@ -924,6 +1198,8 @@ class Component extends DCLogic {
       bgLinesSlowRef: this.bgLinesSlowRef,
       bgLinesFastRef: this.bgLinesFastRef,
       bgBandRef: this.bgBandRef,
+      progressRef: this.progressRef,
+      waveRef: this.waveRef,
       scrubSoundOn: this.state.scrubSound,
       scrubSoundLabel: this.state.scrubSound ? 'Sound Off' : 'Sound On',
       toggleScrubSound: () => {
@@ -944,6 +1220,8 @@ class Component extends DCLogic {
       scrubCap2Ref: this.scrubCap2Ref,
       preloadRef: this.preloadRef,
       preloadBarRef: this.preloadBarRef,
+      preloadCaretRef: this.preloadCaretRef,
+      preloadAudioRef: this.preloadAudioRef,
       hudScrollRef: this.hudScrollRef,
       hudSizeRef: this.hudSizeRef,
       preloaderStyle: {
