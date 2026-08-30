@@ -98,6 +98,14 @@
     <div ref="{{ bgBandRef }}" style="position:absolute;left:0;right:0;top:34%;height:120px;background:linear-gradient(to bottom, transparent 0%, rgba(244,242,238,0.028) 45%, rgba(244,242,238,0.028) 55%, transparent 100%);border-top:1px solid rgba(244,242,238,0.07);border-bottom:1px solid rgba(244,242,238,0.07);will-change:transform;"></div>
   </div>
 
+  <div style="{{ enterGateStyle }}">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;">
+      <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(244,242,238,0.6);text-shadow:0 0 12px rgba(226,232,240,0.4);animation:cyber-flicker 2.4s steps(1,end) infinite;">/// Forma Studio</span>
+      <button type="button" onClick="{{ onEnter }}" data-magnetic="" aria-label="Click to enter the site" style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:15px;font-weight:500;letter-spacing:0.34em;text-transform:uppercase;padding:22px 52px;border-radius:2px;border:1px solid rgba(244,242,238,0.32);background:rgba(244,242,238,0.03);color:#f4f2ee;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:border-color 240ms ease,background 240ms ease,letter-spacing 240ms ease,box-shadow 240ms ease;" style-hover="border-color:#f4f2ee;background:rgba(244,242,238,0.08);letter-spacing:0.4em;box-shadow:0 0 44px rgba(226,232,240,0.28);">Click To Enter</button>
+      <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:rgba(244,242,238,0.3);">Best with sound on</span>
+    </div>
+  </div>
+
   <div style="{{ preloaderStyle }}" aria-hidden="true">
     <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;">
       <span style="position:relative;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(244,242,238,0.75);text-shadow:0 0 12px rgba(226,232,240,0.55);animation:cyber-flicker 2.4s steps(1,end) infinite;">/// Forma Studio</span>
@@ -487,7 +495,7 @@ const SKILL_GROUPS = [
 ];
 
 class Component extends DCLogic {
-  state = { hoveredWork: null, lightbox: null, reelMuted: true, reelPlaying: true, soundOn: readSoundPref(), loaded: false, scrubSound: false };
+  state = { hoveredWork: null, lightbox: null, reelMuted: true, reelPlaying: true, soundOn: readSoundPref(), loaded: false, scrubSound: false, entered: false };
   videoRef = React.createRef();
   preloadRef = React.createRef();
   preloadBarRef = React.createRef();
@@ -569,35 +577,37 @@ class Component extends DCLogic {
     window.addEventListener('resize', this.onHud, { passive: true });
     this.onHud();
 
-    const audio = this.preloadAudioRef.current;
-    if (audio) {
-      audio.volume = 0.85;
-      const tryPlayIntro = () => {
-        if (!audio || !audio.paused || this.preloadDone) return;
+    // Intro (loader count + music) is deferred until the visitor clicks "Click To Enter",
+    // so the browser treats audio.play() as user-initiated and actually plays it.
+    this.startIntro = () => {
+      if (this.introStarted) return;
+      this.introStarted = true;
+
+      const audio = this.preloadAudioRef.current;
+      if (audio) {
+        audio.volume = 0.85;
+        try { audio.currentTime = 0; } catch (e) {}
         const ap = audio.play();
         if (ap && ap.then) ap.then(() => { this.audioStartedAt = performance.now(); }).catch(() => {});
         else this.audioStartedAt = performance.now();
-      };
-      tryPlayIntro();
-      ['pointerdown', 'pointermove', 'keydown', 'touchstart', 'wheel'].forEach((ev) =>
-        window.addEventListener(ev, tryPlayIntro, { once: true, passive: true }));
-    }
+      }
 
-    const FLICKER_MS = 500, COUNT_MS = 3900;
-    const t0 = performance.now() + FLICKER_MS, dur = COUNT_MS;
-    const tick = (now) => {
-      if (now < t0) { this.preloadRaf = requestAnimationFrame(tick); return; }
-      const p = Math.min(1, (now - t0) / dur);
-      const eased = 1 - Math.pow(1 - p, 2.2);
-      const n = Math.round(eased * 100);
-      if (this.preloadRef.current) this.preloadRef.current.textContent = String(n).padStart(3, '0');
-      if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = n + '%';
-      if (p < 1) { this.preloadRaf = requestAnimationFrame(tick); }
-      else { this.preloadRaf = null; this.finishPreload(280); }
+      const FLICKER_MS = 500, COUNT_MS = 3900;
+      const t0 = performance.now() + FLICKER_MS, dur = COUNT_MS;
+      const tick = (now) => {
+        if (now < t0) { this.preloadRaf = requestAnimationFrame(tick); return; }
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 2.2);
+        const n = Math.round(eased * 100);
+        if (this.preloadRef.current) this.preloadRef.current.textContent = String(n).padStart(3, '0');
+        if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = n + '%';
+        if (p < 1) { this.preloadRaf = requestAnimationFrame(tick); }
+        else { this.preloadRaf = null; this.finishPreload(280); }
+      };
+      this.preloadRaf = requestAnimationFrame(tick);
+      this.preloadFallback = setTimeout(() => this.finishPreload(0), 4600);
+      this.startReveals();
     };
-    this.preloadRaf = requestAnimationFrame(tick);
-    this.preloadFallback = setTimeout(() => this.finishPreload(0), 4600);
-    this.startReveals();
 
     if (window.Lenis) {
       this.lenis = new window.Lenis({ lerp: 0.09, anchors: true });
@@ -1249,6 +1259,20 @@ class Component extends DCLogic {
         clipPath: loaded ? 'inset(0 0 100% 0)' : 'inset(0 0 0% 0)',
         transition: 'clip-path 1100ms cubic-bezier(0.76,0,0.24,1)',
         pointerEvents: loaded ? 'none' : 'auto',
+      },
+      enterGateStyle: {
+        position: 'fixed', inset: 0, zIndex: 2600, background: '#0b0b0b',
+        display: 'block',
+        opacity: this.state.entered ? 0 : 1,
+        visibility: this.state.entered ? 'hidden' : 'visible',
+        transition: 'opacity 700ms ease, visibility 0s linear 700ms',
+        pointerEvents: this.state.entered ? 'none' : 'auto',
+      },
+      onEnter: () => {
+        if (this.state.entered) return;
+        this.sfx('press');
+        this.setState({ entered: true });
+        if (this.startIntro) this.startIntro();
       },
       lightboxSrc: this.state.lightbox ? this.state.lightbox.src : '',
       lightboxImgStyle: { width: 'min(90vw,900px)', height: '85vh', backgroundImage: this.state.lightbox ? `url(${this.state.lightbox.src})` : 'none', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', borderRadius: 2, filter: 'drop-shadow(0 40px 100px rgba(0,0,0,0.6))' },
