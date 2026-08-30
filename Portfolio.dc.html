@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="uisfx-player.js"></script>
+<script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@300,400,500,600,700&amp;display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=zodiak@400,700&amp;display=swap">
+<style>
+  body { margin:0; overflow-x:clip; background:#000000; background-attachment:fixed; }
+  a { color:#f4f2ee; text-decoration:none; }
+  a:hover { color:#f4f2ee; }
+  @keyframes nav-in { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:none; } }
+  html.lenis, html.lenis body { height:auto; }
+  .lenis.lenis-smooth { scroll-behavior:auto !important; }
+  @keyframes neon-strike { 0%{opacity:0;text-shadow:none;} 6%{opacity:1;text-shadow:0 0 34px rgba(226,232,240,0.9);} 10%{opacity:0.1;} 16%{opacity:0.95;} 22%{opacity:0.15;} 30%{opacity:1;text-shadow:0 0 44px rgba(226,232,240,1);} 38%{opacity:0.25;} 46%{opacity:0.9;} 54%{opacity:0.3;} 64%{opacity:1;} 72%{opacity:0.45;} 82%{opacity:1;} 90%{opacity:0.7;} 100%{opacity:1;text-shadow:0 0 26px rgba(226,232,240,0.35);} }
+  @keyframes cyber-flicker { 0%,100%{opacity:0.85;} 8%{opacity:0.25;} 10%{opacity:0.9;} 18%{opacity:0.4;} 20%{opacity:1;} 42%{opacity:0.9;} 44%{opacity:0.15;} 46%{opacity:0.95;} 70%{opacity:0.55;} 72%{opacity:1;} 88%{opacity:0.3;} 90%{opacity:0.9;} }
+  @keyframes bar-pulse { 0%,100%{filter:drop-shadow(0 0 6px rgba(226,232,240,0.7));} 50%{filter:drop-shadow(0 0 16px rgba(226,232,240,1));} }
+  @keyframes spin360 { to { transform: rotate(360deg); } }
+  @keyframes marquee-run { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.3; transform:scale(0.72); } }
+  @keyframes cue-pulse { 0%,100%{opacity:0.35;transform:translateY(0);} 50%{opacity:1;transform:translateY(4px);} }
+  @keyframes hud-blink { 0%,100%{opacity:0.9;} 50%{opacity:0.25;} }
+  @keyframes ember-rise { 0%{transform:translate(0,0) scale(0.4);opacity:0;} 10%{opacity:1;} 75%{transform:translate(10px,-70%) scale(1.3);opacity:0.95;} 100%{transform:translate(-8px,-115%) scale(0.5);opacity:0;} }
+  @keyframes leaf-drift { 0%{transform:translate(0,0) rotate(0deg) scale(0.5);opacity:0;} 12%{opacity:1;} 75%{transform:translate(20px,-65%) rotate(200deg) scale(1.15);opacity:0.9;} 100%{transform:translate(-16px,-115%) rotate(320deg) scale(0.5);opacity:0;} }
+  @keyframes smoke-rise { 0%{transform:translate(0,0) scale(0.4);opacity:0;} 15%{opacity:0.9;} 70%{opacity:0.6;} 100%{transform:translate(14px,-130%) scale(3.2);opacity:0;} }
+  @keyframes particle-out { 0%{transform:translate(0,0) scale(0.3);opacity:0;} 18%{opacity:1;} 65%{opacity:0.85;} 100%{transform:translate(var(--dx),var(--dy)) scale(1.1);opacity:0;} }
+  @keyframes smoke-out { 0%{transform:translate(0,0) scale(0.4);opacity:0;} 18%{opacity:0.85;} 65%{opacity:0.5;} 100%{transform:translate(var(--dx),var(--dy)) scale(2.4);opacity:0;} }
+  @keyframes grain-jump { 0%{transform:translate(0,0);} 16%{transform:translate(-34px,22px);} 33%{transform:translate(20px,-40px);} 50%{transform:translate(-48px,-12px);} 66%{transform:translate(36px,30px);} 83%{transform:translate(-14px,44px);} 100%{transform:translate(0,0);} }
+  @keyframes bg-drift-a { 0%{transform:translate3d(-5%,-3%,0) scale(1);} 50%{transform:translate3d(6%,5%,0) scale(1.18);} 100%{transform:translate3d(-5%,-3%,0) scale(1);} }
+  @keyframes bg-drift-b { 0%{transform:translate3d(5%,5%,0) scale(1.14);} 50%{transform:translate3d(-6%,-5%,0) scale(1);} 100%{transform:translate3d(5%,5%,0) scale(1.14);} }
+  @keyframes bg-sheen { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+  @keyframes lines-scroll { 0%{background-position:0 0;} 100%{background-position:0 132px;} }
+  @keyframes halo-breathe { 0%,100%{opacity:0.35;transform:scale(1);} 50%{opacity:0.7;transform:scale(1.06);} }
+  @media (prefers-reduced-motion: reduce) {
+    #bg-stage > div, #studio [data-anim] { animation:none !important; }
+  }
+  @keyframes glow-drift { 0%,100%{background-position:0% 0%;opacity:0.85;transform:scale(1);} 50%{background-position:8% 6%;opacity:1;transform:scale(1.04);} }
+  @media (min-width:761px) and (max-width:1080px) {
+    .skills-row { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:24px !important; }
+  }
+  @media (max-width:1080px) {
+    .work-list { grid-template-columns:minmax(0,1fr) !important; gap:48px !important; }
+    .work-wrapper { width:100% !important; align-self:stretch !important; margin-top:0 !important; }
+    .work-item { transform:none !important; }
+    .work-panel { position:static !important; box-sizing:border-box !important; width:100% !important; opacity:1 !important; transform:none !important; margin-top:20px !important; box-shadow:none !important; padding:26px 28px !important; }
+    .work-label { position:static !important; box-sizing:border-box !important; left:auto !important; bottom:auto !important; max-width:none !important; width:100% !important; border-radius:0 !important; margin-top:-1px !important; box-shadow:none !important; padding:18px 24px !important; }
+  }
+  @media (max-width:760px) {
+    #site-nav { padding:20px 20px !important; flex-wrap:wrap; gap:16px; }
+    #site-nav .nav-links { gap:18px !important; font-size:10.8px !important; }
+    #profile { padding:104px 24px 72px !important; }
+    #about, #experience, #projects, #contact { padding:72px 24px 72px !important; }
+    #about h1, #experience h1, #projects h1, #contact h1 { font-size:44px !important; margin-bottom:36px !important; }
+    .hero-sep { display:none !important; }
+    .hero-grid { grid-template-columns:1fr !important; gap:48px !important; }
+    .hero-title { font-size:54px !important; margin-bottom:24px !important; }
+    .hero-badge { margin-bottom:32px !important; }
+    .hero-lede { margin-bottom:36px !important; }
+    .hero-card-body { padding:12px 22px 22px !important; }
+    .about-cards-row { flex-direction:column !important; gap:20px !important; margin-bottom:32px !important; }
+    .cert-grid { grid-template-columns:1fr !important; gap:24px !important; }
+    .reel-frame { width:250px !important; }
+    .skills-row { grid-template-columns:minmax(0,1fr) !important; gap:20px !important; }
+    .work-list { grid-template-columns:1fr !important; gap:48px !important; }
+    .work-wrapper { width:100% !important; align-self:stretch !important; margin-top:0 !important; }
+    .work-item { transform:none !important; }
+    .work-panel { position:static !important; box-sizing:border-box !important; width:100% !important; opacity:1 !important; transform:none !important; margin-top:20px !important; box-shadow:none !important; padding:26px 24px !important; }
+    .work-label { position:static !important; box-sizing:border-box !important; left:auto !important; bottom:auto !important; max-width:none !important; width:100% !important; border-radius:0 !important; margin-top:-1px !important; box-shadow:none !important; padding:18px 22px !important; }
+    .contact-wrap { width:100% !important; flex-direction:column !important; padding:8px !important; }
+    .contact-wrap > div { margin:12px 16px !important; justify-content:flex-start !important; }
+    button[aria-label^="Scroll to"] { display:none !important; }
+    #nav-bar #site-nav { padding:14px 20px !important; }
+    #site-nav .nav-links { display:none !important; }
+    #studio > div { min-height:0 !important; padding:64px 20px !important; }
+    #studio > div > div:last-child { padding:36px 24px !important; }
+    #studio h2 { font-size:56px !important; }
+    .studio-principles { grid-template-columns:1fr !important; }
+  }
+</style>
+</helmet>
+
+<div style="font-family:'Switzer','Helvetica Neue',sans-serif;background:#000000;background-attachment:fixed;color:#f4f2ee;line-height:1.6;-webkit-font-smoothing:antialiased;position:relative;overflow-x:clip;">
+
+  <div id="bg-stage" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(to right, transparent calc(8% - 1px), rgba(244,242,238,0.05) 8%, transparent calc(8% + 1px)), linear-gradient(to right, transparent calc(63% - 1px), rgba(244,242,238,0.05) 63%, transparent calc(63% + 1px)), linear-gradient(to right, transparent calc(88% - 1px), rgba(244,242,238,0.05) 88%, transparent calc(88% + 1px));"></div>
+    <div ref="{{ bgLinesSlowRef }}" style="position:absolute;inset:-120% 0;background-image:repeating-linear-gradient(to bottom, rgba(244,242,238,0.05) 0 1px, transparent 1px 340px);will-change:transform;"></div>
+    <div ref="{{ bgLinesFastRef }}" style="position:absolute;inset:-120% 0;background-image:repeating-linear-gradient(to bottom, transparent 0 519px, rgba(244,242,238,0.11) 519px 520px, transparent 520px 560px, rgba(244,242,238,0.04) 560px 561px, transparent 561px 1040px);will-change:transform;"></div>
+    <div ref="{{ bgBandRef }}" style="position:absolute;left:0;right:0;top:34%;height:120px;background:linear-gradient(to bottom, transparent 0%, rgba(244,242,238,0.028) 45%, rgba(244,242,238,0.028) 55%, transparent 100%);border-top:1px solid rgba(244,242,238,0.07);border-bottom:1px solid rgba(244,242,238,0.07);will-change:transform;"></div>
+  </div>
+
+  <div style="{{ preloaderStyle }}" aria-hidden="true">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;">
+      <span style="position:relative;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:rgba(244,242,238,0.75);text-shadow:0 0 12px rgba(226,232,240,0.55);animation:cyber-flicker 2.4s steps(1,end) infinite;">/// Forma Studio</span>
+      <span style="display:flex;align-items:baseline;gap:10px;">
+        <span ref="{{ preloadRef }}" style="font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:104px;line-height:1;color:#f4f2ee;font-variant-numeric:tabular-nums;text-shadow:0 0 26px rgba(226,232,240,0.35);animation:neon-strike 500ms steps(1,end) 1 both;">000</span>
+      </span>
+      <div style="position:relative;width:260px;height:2px;background:rgba(244,242,238,0.14);box-shadow:0 0 22px rgba(226,232,240,0.12);">
+        <div ref="{{ preloadBarRef }}" style="width:0%;height:100%;background:linear-gradient(90deg, rgba(226,232,240,0.5) 0%, #ffffff 100%);box-shadow:0 0 12px rgba(226,232,240,0.9), 0 0 30px rgba(226,232,240,0.55);animation:bar-pulse 1.6s ease-in-out infinite;"></div>
+      </div>
+      <audio ref="{{ preloadAudioRef }}" src="uploads/Portfolio Loading Music.opus" preload="auto"></audio>
+    </div>
+  </div>
+
+  <div style="position:fixed;left:24px;bottom:20px;z-index:880;display:flex;gap:18px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(244,242,238,0.42);pointer-events:none;mix-blend-mode:difference;">
+    <span ref="{{ hudScrollRef }}" style="color: #FFFFFF9B; font-weight: 800; text-decoration-line: none; font-size: 12px">000%</span>
+    <span ref="{{ hudSizeRef }}" style="font-size: 12px; color: #FFFFFF96">0x0</span>
+    <span style="animation: hud-blink 2.4s ease-in-out infinite; font-size: 12px; color: #FFFFFF99">●</span>
+  </div>
+
+  <div ref="{{ spotlightRef }}" aria-hidden="true" style="position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 600ms ease; top: 7px"></div>
+  <div ref="{{ cursorRingRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;z-index:3000;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(244,242,238,0.85);border-radius:50%;pointer-events:none;mix-blend-mode:difference;opacity:0;transition:width 260ms ease,height 260ms ease,margin 260ms ease,opacity 300ms ease;"></div>
+  <div ref="{{ cursorDotRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;z-index:3000;width:4px;height:4px;margin:-2px 0 0 -2px;background:#f4f2ee;border-radius:50%;pointer-events:none;mix-blend-mode:difference;opacity:0;"></div>
+
+  <div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;height:2px;z-index:1200;background:rgba(244,242,238,0.08);">
+    <div ref="{{ progressRef }}" style="width:0%;height:100%;background:#f4f2ee;"></div>
+  </div>
+
+  <div id="nav-bar" style="position:sticky;top:0;z-index:900;background:rgba(11,11,11,0.55);backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%);border-bottom:1px solid rgba(244,242,238,0.1);">
+    <nav id="site-nav" style="opacity:0;animation:nav-in 1000ms cubic-bezier(0.16,0.84,0.24,1) 1.75s forwards;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:16px 40px;">
+      <a href="#profile" onClick="{{ onNavClick }}" style="display:flex;align-items:center;gap:13px;flex-shrink:0;">
+        <img src="assets/forma-mark-black.png" alt="" style="height:28px;width:auto;filter:invert(1);opacity:0.92;">
+        <span style="display:flex;flex-direction:column;line-height:1;">
+          <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;letter-spacing:0.01em;color:#f4f2ee;white-space:nowrap;">Ruman Dhaliwal</span>
+          <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:8.4px;letter-spacing:0.44em;text-transform:uppercase;color:rgba(244,242,238,0.45);margin-top:7px;white-space:nowrap;">Forma Studio</span>
+        </span>
+      </a>
+      <div style="display:flex;align-items:center;gap:30px;">
+        <ul class="nav-links" style="display:flex;gap:32px;list-style:none;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11.2px;letter-spacing:0.16em;text-transform:uppercase;margin:0;padding:0;">
+          <li style="position:relative;display:flex;flex-direction:column;align-items:center;"><a href="#profile" onClick="{{ onNavClick }}" style="color:#f4f2ee;">Home</a><span aria-hidden="true" style="position:absolute;top:calc(100% + 5px);width:3px;height:3px;border-radius:50%;background:#f4f2ee;"></span></li>
+          <li><a href="#about" onClick="{{ onNavClick }}" style="color:#9a958e;" style-hover="color:#f4f2ee;">About</a></li>
+          <li><a href="#studio" onClick="{{ onNavClick }}" style="color:#9a958e;" style-hover="color:#f4f2ee;">Studio</a></li>
+          <li><a href="#experience" onClick="{{ onNavClick }}" style="color:#9a958e;" style-hover="color:#f4f2ee;">Experience</a></li>
+          <li><a href="#projects" onClick="{{ onNavClick }}" style="color:#9a958e;" style-hover="color:#f4f2ee;">Work</a></li>
+          <li><a href="#contact" onClick="{{ onNavClick }}" style="color:#9a958e;" style-hover="color:#f4f2ee;">Contact</a></li>
+        </ul>
+                <button type="button" onClick="{{ onSoundToggle }}" aria-pressed="{{ soundOn }}" aria-label="{{ soundAriaLabel }}" title="{{ soundAriaLabel }}" style="{{ soundBtnStyle }}" style-hover="{{ soundBtnHoverStyle }}">
+          <span aria-hidden="true" style="{{ soundDotStyle }}"></span>
+          <span>{{ soundLabel }}</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <section id="profile" style="max-width:1200px;margin:0 auto;padding:176px 40px 80px;position:relative;">
+    <div class="hero-grid" style="display:grid;grid-template-columns:1.35fr 1px 1fr;gap:48px;align-items:stretch;">
+      <div>
+        <p style="display:flex;align-items:center;gap:18px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11px;letter-spacing:0.4em;text-transform:uppercase;color:#9a958e;margin:0 0 30px;"><span>Portfolio</span><span aria-hidden="true" style="display:inline-block;width:56px;height:1px;background:rgba(244,242,238,0.3);"></span></p>
+        <div data-reveal="" data-reveal-delay="1750" style="opacity:0;transform:translateY(26px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);"><div class="hero-badge" style="display:inline-flex;align-items:stretch;border:1px solid rgba(244,242,238,0.22);border-radius:2px;margin-bottom:40px;background:rgba(244,242,238,0.03);">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:56px;background:rgba(244,242,238,0.06);border-right:1px solid rgba(244,242,238,0.22);"><img src="assets/forma-mark-black.png" alt="" style="height:26px;width:auto;filter:invert(1);"></span>
+          <span style="display:inline-flex;align-items:center;padding:15px 24px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;color:#e7e4de;">Available for new projects<span aria-hidden="true" style="width:8px;height:8px;margin-left:14px;border-radius:50%;background:#f4f2ee;animation:pulse-dot 2.6s ease-in-out infinite;"></span></span>
+        </div></div>
+        <h1 data-reveal="" class="hero-title" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:400;color:#f4f2ee;font-size:104px;line-height:1.02;letter-spacing:0;margin:0 0 26px;">Ruman<br>Dhaliwal</h1>
+        <p data-reveal="" data-reveal-delay="1900" style="opacity:0;transform:translateY(24px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13px;letter-spacing:0.42em;text-transform:uppercase;color:#9a958e;margin:0 0 30px;">Frontend Developer</p>
+        <p class="hero-lede" data-reveal="" data-reveal-delay="1950" style="opacity:0;transform:translateY(26px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);font-size:20.8px;color:#9a958e;max-width:34ch;margin:0 0 40px;">I design and build fast, considered interfaces — and help businesses integrate AI and automate the busywork, from restaurant launches to product showcases.</p>
+        <div data-reveal="" data-reveal-delay="2050" style="opacity:0;transform:translateY(24px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);display:flex;flex-wrap:wrap;gap:16px;">
+          <button type="button" data-magnetic="" onClick="{{ onViewWork }}" style="{{ btnPrimaryStyle }}" style-hover="{{ btnPrimaryHoverStyle }}">→&nbsp; View Projects</button>
+          <button data-magnetic="" style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:14.4px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:17px 32px;border-radius:2px;border:1px solid rgba(244,242,238,0.3);background:transparent;color:#f4f2ee;cursor:pointer;" onClick="{{ scrollToContact }}" style-hover="border-color:#f4f2ee;">Contact Me</button>
+        </div>
+        <div data-reveal="" style="display:flex;align-items:center;gap:12px;margin-top:34px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.34em;text-transform:uppercase;color:rgba(244,242,238,0.45);opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);">
+          <span>Scroll</span>
+          <span aria-hidden="true" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(244,242,238,0.28);border-radius:50%;font-size:13px;animation:cue-pulse 2.6s ease-in-out infinite;">↓</span>
+        </div>
+        <div aria-hidden="true" style="width:132px;height:132px;margin-top:34px;pointer-events:none;">
+          <svg viewBox="0 0 180 180" style="width:100%;height:100%;animation:spin360 var(--spin-dur,26s) linear infinite;">
+            <defs><path id="formaArc" d="M90,90 m-66,0 a66,66 0 1,1 132,0 a66,66 0 1,1 -132,0" fill="none"></path></defs>
+            <circle cx="90" cy="90" r="66" fill="none" stroke="rgba(244,242,238,0.14)" stroke-width="1"></circle>
+            <text style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11px;letter-spacing:0.2em;fill:rgba(244,242,238,0.62);">
+              <textPath href="#formaArc">FORMA · FRONTEND DEVELOPER · FORMA · 2026 · </textPath>
+            </text>
+            <circle cx="90" cy="90" r="3" fill="rgba(244,242,238,0.5)"></circle>
+          </svg>
+        </div>
+      </div>
+      <div class="hero-sep" aria-hidden="true" style="width:1px;background:linear-gradient(to bottom, transparent 0%, rgba(244,242,238,0.22) 12%, rgba(244,242,238,0.22) 88%, transparent 100%);"></div>
+      <div class="hero-card" data-reveal="" data-reveal-delay="2250" style="opacity:0;transform:translateY(30px);transition:opacity 1100ms cubic-bezier(0.16,0.84,0.24,1),transform 1100ms cubic-bezier(0.16,0.84,0.24,1);background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);color:#f4f2ee;border:1px solid rgba(244,242,238,0.14);box-shadow:0 30px 70px -40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(244,242,238,0.08);border-radius:2px;padding:0;overflow:hidden;font-family:'Switzer','Helvetica Neue',sans-serif;">
+        <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#0b0b0b;border-bottom:1px solid rgba(244,242,238,0.14);">
+          <iframe src="https://rumanddd.github.io/Listen-Sideways/" title="Listen Sideways landing page, live preview" loading="lazy" scrolling="no" style="position:absolute;top:0;left:0;width:400%;height:400%;border:0;transform:scale(0.25);transform-origin:0 0;"></iframe>
+          <span aria-hidden="true" style="position:absolute;left:12px;top:12px;display:flex;align-items:center;gap:7px;padding:6px 11px;border:1px solid rgba(244,242,238,0.28);border-radius:2px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);font-family:'Switzer','Helvetica Neue',sans-serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(244,242,238,0.8);"><span style="width:5px;height:5px;border-radius:50%;background:#f4f2ee;animation:pulse-dot 2.6s ease-in-out infinite;"></span>Live</span>
+        </div>
+        <div class="hero-card-body" style="padding:14px 32px 26px;">
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Project</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">Listen Sideways</span></div>
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Type</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">Website Design &amp; Development</span></div>
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid rgba(244,242,238,0.16);"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Tools</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">HTML, CSS, JS, TS, React, CD</span></div>
+        <div style="display:flex;justify-content:space-between;gap:20px;padding:17px 0;"><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);white-space:nowrap;">Year</span><span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;text-align:right;">2026</span></div>
+        <button type="button" data-magnetic="" onClick="{{ onViewWork }}" style="display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:0;background:none;border:none;cursor:pointer;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:#f4f2ee;" style-hover="color:#9a958e;">View Project <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="position:relative;border-top:1px solid rgba(244,242,238,0.14);border-bottom:1px solid rgba(244,242,238,0.14);overflow:hidden;">
+    <div style="display:flex;width:max-content;animation:marquee-run var(--marquee-dur,30s) linear infinite;">
+      <div style="display:flex;align-items:center;gap:56px;flex:none;padding:16px 28px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.34em;text-transform:uppercase;color:rgba(244,242,238,0.7);white-space:nowrap;">
+        <span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:56px;flex:none;padding:16px 28px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.34em;text-transform:uppercase;color:rgba(244,242,238,0.7);white-space:nowrap;">
+        <span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span><span>FORMA</span><span style="opacity:0.4;">●</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="about" style="max-width:1200px;margin:0 auto;padding:112px 40px 80px;position:relative;">
+    <p style="{{ eyebrowStyle }}">Get To Know More</p>
+    <h1 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:66px;letter-spacing:-0.01em;margin:0 0 36px;">About Me</h1>
+    <div style="display:flex;flex-direction:column;">
+      <div class="about-cards-row" style="display:flex;gap:32px;margin-bottom:40px;">
+        <div style="padding:29.6px;flex:1;background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);border-radius:3px;border:1px solid rgba(244,242,238,0.14);box-shadow:inset 0 1px 0 rgba(244,242,238,0.07);text-align:left;">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28" style="{{ iconGlyphStyle }}" aria-hidden="true"><path d="M4 8.5C4 7.11929 5.11929 6 6.5 6H17.5C18.8807 6 20 7.11929 20 8.5V17C20 18.1046 19.1046 19 18 19H6C4.89543 19 4 18.1046 4 17V8.5Z" stroke="currentColor" stroke-width="1.5"></path><path d="M9 6V5.5C9 4.67157 9.67157 4 10.5 4H13.5C14.3284 4 15 4.67157 15 5.5V6" stroke="currentColor" stroke-width="1.5"></path><path d="M4 12.5C6.5 13.8333 17.5 13.8333 20 12.5" stroke="currentColor" stroke-width="1.5"></path></svg>
+          <h3 style="font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;margin:16px 0 7px;font-size:26px;">Experience</h3>
+          <p style="color:#9a958e;margin:0;">2+ years <br>Frontend Development</p>
+        </div>
+        <div style="padding:29.6px;flex:1;background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);border-radius:3px;border:1px solid rgba(244,242,238,0.14);box-shadow:inset 0 1px 0 rgba(244,242,238,0.07);text-align:left;">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28" style="{{ iconGlyphStyle }}" aria-hidden="true"><path d="M12 3L2 8L12 13L22 8L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M6 10.5V16C6 16 8.5 18 12 18C15.5 18 18 16 18 16V10.5" stroke="currentColor" stroke-width="1.5"></path><path d="M22 8V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+          <h3 style="font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;margin:16px 0 7px;font-size:26px;">Education</h3>
+          <p style="color:#9a958e;margin:0;">Frontend Developer<br>&amp;<br>Mobile App Developer Certificate</p>
+        </div>
+      </div>
+      <div class="cert-grid" style="display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:start;">
+        <div class="reel-frame" style="position:relative;width:300px;max-width:100%;aspect-ratio:9/16;border-radius:3px;overflow:hidden;border:1px solid rgba(244,242,238,0.16);background:#0b0b0b;">
+          <video ref="{{ videoRef }}" src="assets/reel.mp4" onClick="{{ toggleReelPlay }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:100%;object-fit:cover;cursor:pointer;filter:grayscale(1) contrast(1.05);"></video>
+          <div style="position:absolute;left:16px;bottom:16px;display:flex;gap:10px;">
+            <button type="button" onClick="{{ toggleReelMute }}" aria-label="{{ reelMuteLabel }}" style="{{ reelBtnStyle }}" style-hover="{{ reelBtnHoverStyle }}">{{ reelMuteLabel }}</button>
+            <button type="button" onClick="{{ toggleReelPlay }}" aria-label="{{ reelPlayLabel }}" style="{{ reelBtnStyle }}" style-hover="{{ reelBtnHoverStyle }}">{{ reelPlayLabel }}</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13.6px;letter-spacing:0.22em;text-transform:uppercase;color:#9a958e;margin:0 0 6px;">Credentials</p>
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox1 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+            <img src="assets/UI-UX.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
+            <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">UI / UX Design Certificate</span>
+            <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
+          </button>
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox2 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+            <img src="assets/frontend-course.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
+            <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">Frontend Development Course</span>
+            <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
+          </button>
+          <button type="button" class="cert-thumb" onClick="{{ openCertLightbox3 }}" style="{{ certRowStyle }}" style-hover="{{ certRowHoverStyle }}">
+            <img src="assets/masterd.png" alt="" style="width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:grayscale(1) contrast(1.05);">
+            <span style="flex:1;text-align:left;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;color:#f4f2ee;line-height:1.35;">Masterd Mobile App Developer</span>
+            <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9a958e;">View</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button onClick="{{ scrollToExperience }}" aria-label="Scroll to Experience" style="position:absolute;right:40px;bottom:-24px;background:none;border:none;color:#9a958e;cursor:pointer;padding:8px;" style-hover="{{ scrollArrowHoverStyle }}">
+      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+  </section>
+
+  <section id="studio" style="position:relative;overflow:hidden;margin-top:64px;">
+    <div style="position:relative;min-height:680px;display:flex;align-items:center;justify-content:center;padding:96px 40px;">
+      <div ref="{{ pxBgRef }}" aria-hidden="true" style="position:absolute;inset:-18% -12%;display:flex;align-items:center;justify-content:center;will-change:transform;pointer-events:none;">
+        <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:min(34vw,520px);line-height:0.78;letter-spacing:-0.01em;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(244,242,238,0.13);white-space:nowrap;">FORMA</span>
+      </div>
+      <div ref="{{ pxMidRef }}" aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;will-change:transform;pointer-events:none;">
+        <img src="assets/forma-mark-black.png" alt="" style="height:440px;width:auto;filter:invert(1);opacity:0.06;">
+      </div>
+      <div ref="{{ pxLinesRef }}" aria-hidden="true" style="position:absolute;inset:-20% 0;background-image:repeating-linear-gradient(to bottom, rgba(244,242,238,0.055) 0 1px, transparent 1px 132px);will-change:transform;pointer-events:none;animation:lines-scroll 22s linear infinite;" data-anim="lines"></div>
+      <div aria-hidden="true" data-anim="halo" style="position:absolute;top:50%;left:50%;width:min(92vw,860px);height:420px;margin:-210px 0 0 min(-46vw,-430px);border-radius:50%;background:radial-gradient(ellipse, rgba(244,242,238,0.09) 0%, rgba(244,242,238,0.02) 45%, transparent 72%);filter:blur(30px);animation:halo-breathe 14s ease-in-out infinite;pointer-events:none;"></div>
+      <div ref="{{ pxFgRef }}" style="position:relative;z-index:2;width:100%;max-width:720px;padding:52px 56px;text-align:center;background:rgba(244,242,238,0.05);backdrop-filter:blur(28px) saturate(140%);-webkit-backdrop-filter:blur(28px) saturate(140%);border:1px solid rgba(244,242,238,0.14);border-radius:3px;box-shadow:0 40px 90px -50px rgba(0,0,0,0.95), inset 0 1px 0 rgba(244,242,238,0.09);will-change:transform;">
+        <p style="{{ eyebrowStyle }}">The Studio</p>
+        <h2 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:80px;line-height:0.95;letter-spacing:-0.01em;margin:0 0 22px;">Forma</h2>
+        <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:19.5px;line-height:1.6;color:rgba(244,242,238,0.75);max-width:46ch;margin:0 auto 40px;text-wrap:pretty;">A one-person design and development studio. Few clients, high standards, and sites built by hand — fast to load, clear to read, and made to age well.</p>
+        <div class="studio-principles" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(244,242,238,0.14);border:1px solid rgba(244,242,238,0.14);">
+          <div style="padding:22px 16px;background:rgba(11,11,11,0.35);">
+            <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11.2px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(244,242,238,0.45);margin:0 0 10px;">01</p>
+            <p style="font-family:'Zodiak',Didot,Georgia,serif;font-size:26px;line-height:1.05;font-weight:700;color:#f4f2ee;margin:0;">Restraint over decoration</p>
+          </div>
+          <div style="padding:22px 16px;background:rgba(11,11,11,0.35);">
+            <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11.2px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(244,242,238,0.45);margin:0 0 10px;">02</p>
+            <p style="font-family:'Zodiak',Didot,Georgia,serif;font-size:26px;line-height:1.05;font-weight:700;color:#f4f2ee;margin:0;">Written, not assembled</p>
+          </div>
+          <div style="padding:22px 16px;background:rgba(11,11,11,0.35);">
+            <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:11.2px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(244,242,238,0.45);margin:0 0 10px;">03</p>
+            <p style="font-family:'Zodiak',Didot,Georgia,serif;font-size:26px;line-height:1.05;font-weight:700;color:#f4f2ee;margin:0;">Shipped, then kept</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" style="max-width:1200px;margin:0 auto;padding:112px 40px 80px;position:relative;">
+    <p style="{{ eyebrowStyle }}">Explore My</p>
+    <h1 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:66px;letter-spacing:-0.01em;margin:0 0 36px;">Experience</h1>
+    <div class="skills-row" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;align-items:start;">
+      <sc-for list="{{ skillGroups }}" as="grp" hint-placeholder-count="3">
+        <div style="padding:29.6px;flex:1;background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);border-radius:3px;border:1px solid rgba(244,242,238,0.14);box-shadow:inset 0 1px 0 rgba(244,242,238,0.07);text-align:left;">
+          <h2 style="color:#f4f2ee;font-family:'Switzer','Helvetica Neue',sans-serif;font-weight:600;font-size:21.6px;margin:0 0 28px;">{{ grp.title }}</h2>
+          <ul style="list-style:none;margin:0;padding:0;">
+            <sc-for list="{{ grp.skills }}" as="skill" hint-placeholder-count="4">
+              <li style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:15.2px 0;border-bottom:1px solid rgba(244,242,238,0.16);">
+                <span style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:17px;color:#f4f2ee;">{{ skill.name }}</span>
+                <span style="position:relative;display:flex;align-items:center;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12.8px;letter-spacing:0.1em;text-transform:uppercase;color:#9a958e;padding-left:60px;white-space:nowrap;">
+                  <span style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:52px;height:4px;border-radius:2px;background:{{ skill.barBg }};"></span>
+                  {{ skill.level }}
+                </span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </div>
+    <button onClick="{{ scrollToProjects }}" aria-label="Scroll to Work" style="position:absolute;right:40px;bottom:-24px;background:none;border:none;color:#9a958e;cursor:pointer;padding:8px;" style-hover="{{ scrollArrowHoverStyle }}">
+      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+  </section>
+
+
+  <section id="reel-scrub" aria-label="Reel frame scrub" style="position:relative;height:200vh;margin-top:0;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+      <canvas ref="{{ scrubCanvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;filter:grayscale(1) contrast(1.06);"></canvas>
+      <video ref="{{ scrubVideoRef }}" src="assets/reel.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"></video>
+      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 50%, rgba(11,11,11,0) 30%, rgba(11,11,11,0.72) 100%);"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom, rgba(11,11,11,0.14) 0 2px, transparent 2px 4px);opacity:0.5;"></div>
+      <div style="position:relative;z-index:2;max-width:1200px;width:100%;padding:0 40px;display:flex;flex-direction:column;gap:22px;">
+        
+        <span style="font-family: 'Switzer','Helvetica Neue',sans-serif; font-size: 16px; letter-spacing: 0.44em; text-transform: uppercase; color: rgba(244,242,238,0.5); font-weight: 600; height: 20px">///</span><div style="position:relative;min-height:190px;">
+          <p ref="{{ scrubCap0Ref }}" style="position:absolute;top:0;left:0;margin:0;max-width:20ch;font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:64px;line-height:1.02;color:#f4f2ee;transition:opacity 320ms ease;">Frame by frame.</p>
+          <p ref="{{ scrubCap1Ref }}" style="position:absolute;top:0;left:0;margin:0;max-width:20ch;font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:64px;line-height:1.02;color:#f4f2ee;opacity:0;transition:opacity 320ms ease;">Built, not templated.</p>
+          <p ref="{{ scrubCap2Ref }}" style="position:absolute;top:0;left:0;margin:0;max-width:20ch;font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;font-size:64px;line-height:1.02;color:#f4f2ee;opacity:0;transition:opacity 320ms ease;">Shipped with intent.</p>
+        </div>
+        <div style="display:flex;gap:20px;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(244,242,238,0.45);">
+          <span ref="{{ scrubFrameRef }}" style="color: #FFFFFFBA; font-size: 12px; text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15)">frame 000</span>
+          <span ref="{{ scrubPctRef }}" style="color: #FFFFFFBA; font-size: 12px">000%</span>
+          <button type="button" onClick="{{ toggleScrubSound }}" aria-pressed="{{ scrubSoundOn }}" style="pointer-events:auto;background:none;border:1px solid rgba(244,242,238,0.3);border-radius:2px;padding:7px 14px;cursor:pointer;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#f4f2ee;" style-hover="border-color:#f4f2ee;">{{ scrubSoundLabel }}</button>
+        </div>
+        <div style="width: 100%; max-width: 450px; height: 3px; overflow: hidden; background-color: #8E8B8B90">
+          <div ref="{{ scrubBarRef }}" style="width: 0%; height: 100%; background-color: #FFFFFFC4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" style="max-width:1200px;margin:0 auto;padding:112px 40px 80px;position:relative;">
+    <p style="{{ eyebrowStyle }}">Browse My Recent</p>
+    <h1 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:66px;letter-spacing:-0.01em;margin:0 0 36px;">Selected Work</h1>
+    <div class="work-list" style="{{ workListStyle }}">
+      <sc-for list="{{ workItems }}" as="w" hint-placeholder-count="3">
+        <div class="work-wrapper" onMouseEnter="{{ w.onEnter }}" onMouseLeave="{{ w.onLeave }}" style="{{ w.wrapperStyle }}">
+          <article class="work-item" style="{{ w.itemStyle }}">
+            <div style="position:relative;aspect-ratio:16/8;overflow:hidden;border-radius:0;">
+              <div style="{{ w.glowOverlayStyle }}"></div>
+              <div role="img" aria-label="{{ w.imgAlt }}" style="{{ w.imgStyle }}"></div>
+            </div>
+            <div class="work-label" style="{{ w.labelStyle }}">
+              <p style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(244,242,238,0.55);margin:0 0 5px;">{{ w.meta }}</p>
+              <h3 style="font-size:26px;line-height:1.05;color:#f4f2ee;font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;margin:0;">{{ w.title }}</h3>
+            </div>
+          </article>
+          <div class="work-panel" onMouseEnter="{{ w.onEnter }}" onMouseLeave="{{ w.onLeave }}" style="{{ w.panelStyle }}">
+            <p style="color:rgba(244,242,238,0.72);font-family:'Switzer','Helvetica Neue',sans-serif;font-size:16.5px;line-height:1.55;margin:0 0 18px;">{{ w.desc }}</p>
+            <ul style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 20px;padding:0;">
+              <sc-for list="{{ w.tags }}" as="tag" hint-placeholder-count="3">
+                <li style="font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12.8px;letter-spacing:0.14em;text-transform:uppercase;padding:6.5px 13px;border-radius:2px;border:1px solid rgba(244,242,238,0.24);color:rgba(244,242,238,0.55);">{{ tag }}</li>
+              </sc-for>
+            </ul>
+            <div style="display:flex;gap:20px;flex-wrap:wrap;">
+              <a href="{{ w.siteUrl }}" target="_blank" rel="noopener noreferrer" onClick="{{ onExternalClick }}" style="{{ workLinkStyle }}" style-hover="{{ workLinkHoverStyle }}">Visit site ↗</a>
+              <a href="{{ w.codeUrl }}" target="_blank" rel="noopener noreferrer" onClick="{{ onExternalClick }}" style="{{ workLinkStyle }}" style-hover="{{ workLinkHoverStyle }}">View code ↗</a>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <button onClick="{{ scrollToContact }}" aria-label="Scroll to Contact" style="position:absolute;right:40px;bottom:-24px;background:none;border:none;color:#9a958e;cursor:pointer;padding:8px;" style-hover="{{ scrollArrowHoverStyle }}">
+      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+  </section>
+
+  <section id="contact" style="max-width:1200px;margin:0 auto;padding:112px 40px 128px;position:relative;">
+    <svg aria-hidden="true" viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:34px;width:100%;height:110px;opacity:0.45;pointer-events:none;">
+      <path ref="{{ waveRef }}" d="M0,150" fill="none" stroke="rgba(244,242,238,0.5)" stroke-width="1"></path>
+    </svg>
+    <p style="{{ eyebrowStyle }}">Get in Touch</p>
+    <h1 data-reveal="" style="opacity:0;transform:translateY(30px);transition:opacity 1000ms cubic-bezier(0.16,0.84,0.24,1),transform 1000ms cubic-bezier(0.16,0.84,0.24,1);font-family:'Zodiak',Didot,Georgia,serif;font-weight:700;color:#f4f2ee;font-size:66px;letter-spacing:-0.01em;margin:0 0 36px;">Contact Me</h1>
+    <div class="contact-wrap" style="display:flex;flex-wrap:wrap;justify-content:center;border-radius:3px;border:1px solid rgba(244,242,238,0.14);background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);margin:32px auto 0;padding:8px;width:fit-content;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 24px;">
+        <svg viewBox="0 0 24 24" fill="none" width="28" height="28" style="{{ iconGlyphStyle }}" aria-hidden="true"><path d="M4 6H20V18H4V6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M4 6L12 13L20 6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+        <p style="margin:0;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:20px;"><a href="mailto:rumanddd@gmail.com" onClick="{{ onContactClick }}" style="color:#f4f2ee;" style-hover="{{ contactLinkHoverStyle }}">rumanddd@gmail.com</a></p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 24px;">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" style="{{ iconGlyphStyle }}" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"></path></svg>
+        <p style="margin:0;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:20px;"><a href="https://www.linkedin.com/in/rumanddd" target="_blank" rel="noopener noreferrer" onClick="{{ onExternalClick }}" style="color:#f4f2ee;" style-hover="{{ contactLinkHoverStyle }}">LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(244,242,238,0.16);padding:40px 16px;">
+    <nav style="max-width:1200px;margin:0 auto;padding:0 0 24px;display:flex;justify-content:center;">
+      <ul style="display:flex;gap:36px;list-style:none;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:12.8px;letter-spacing:0.08em;text-transform:uppercase;margin:0;padding:0;">
+        <li><a href="#about" style="color:#9a958e;" style-hover="color:#f4f2ee;">About</a></li>
+        <li><a href="#experience" style="color:#9a958e;" style-hover="color:#f4f2ee;">Experience</a></li>
+        <li><a href="#projects" style="color:#9a958e;" style-hover="color:#f4f2ee;">Work</a></li>
+        <li><a href="#contact" style="color:#9a958e;" style-hover="color:#f4f2ee;">Contact</a></li>
+      </ul>
+    </nav>
+    <p style="text-align:center;font-family:'Switzer','Helvetica Neue',sans-serif;font-size:14.4px;color:#9a958e;letter-spacing:0.12em;margin:0;">Copyright © 2026 Ruman Dhaliwal All Rights Reserved.</p>
+  </footer>
+
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Certificate preview" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:48px 32px;background:rgba(12,12,12,0.92);">
+      <button type="button" onClick="{{ closeLightbox }}" aria-label="Close preview" style="position:absolute;top:24px;right:24px;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,242,238,0.3);background:rgba(244,242,238,0.05);backdrop-filter:blur(20px) saturate(130%);-webkit-backdrop-filter:blur(20px) saturate(130%);color:#f4f2ee;cursor:pointer;" style-hover="{{ closeHoverStyle }}">
+        <svg viewBox="0 0 24 24" fill="none" width="17.6" height="17.6" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+      </button>
+      <div role="img" aria-label="{{ lightboxAlt }}" onClick="{{ stopProp }}" style="{{ lightboxImgStyle }}"></div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Kinetic&quot;,&quot;options&quot;:[&quot;Still&quot;,&quot;Balanced&quot;,&quot;Kinetic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;accentMood&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Ink&quot;,&quot;options&quot;:[&quot;Ink&quot;,&quot;Graphite&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;workLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Scattered&quot;,&quot;options&quot;:[&quot;Scattered&quot;,&quot;Grid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Work section&quot;},&quot;energy&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Wild&quot;,&quot;options&quot;:[&quot;Wild&quot;,&quot;Calm&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+// Each particle: [edge, pos%, dx, dy, delay, dur, variant]
+const V9_PARTICLES = [
+  ['top',8,-8,-26,0,2.6,'ember'],['top',26,6,-30,0.5,3,'ash'],['top',44,-5,-24,1.1,2.4,'ember'],['top',62,7,-32,0.3,3.2,'ash'],['top',80,-6,-27,1.6,2.8,'ember'],
+  ['bottom',15,6,24,0.7,2.7,'ash'],['bottom',50,-6,28,1.3,3.1,'ember'],['bottom',85,5,22,0.2,2.5,'ash'],
+  ['left',25,-26,-6,0.9,2.9,'ember'],['left',65,-24,8,0.4,2.6,'ash'],
+  ['right',30,26,7,1.4,3,'ember'],['right',70,24,-8,0.6,2.8,'ash'],
+];
+const MOSS_PARTICLES = [
+  ['top',10,-7,-24,0.2,4.4,'leaf'],['top',28,6,-28,0.9,5,'moss'],['top',46,-5,-22,1.5,4.2,'leaf'],['top',64,7,-30,0.4,5.2,'moss'],['top',82,-6,-25,1.1,4.6,'leaf'],
+  ['bottom',18,6,22,0.6,4.8,'moss'],['bottom',52,-6,26,1.3,5.1,'leaf'],['bottom',86,5,20,0.3,4.3,'moss'],
+  ['left',22,-24,-6,1,4.7,'leaf'],['left',62,-22,7,0.5,5,'moss'],
+  ['right',35,24,6,1.2,4.5,'leaf'],['right',75,22,-7,0.7,4.9,'moss'],
+];
+const VELOCITY_PARTICLES = [
+  ['bottom',10,-10,20,0,3.6,'smoke'],['bottom',26,4,26,0.6,4.2,'smoke'],['bottom',42,-6,22,1.2,3.8,'smoke'],['bottom',58,8,28,0.3,4.4,'smoke'],['bottom',74,-4,24,0.9,4,'smoke'],['bottom',90,6,20,1.5,4.6,'smoke'],
+  ['left',40,-18,10,0.5,4.1,'smoke'],['right',40,18,10,1,4.3,'smoke'],
+];
+
+function particleStyle(edge, pos, dx, dy, delay, dur, variant) {
+  const edgePos = edge === 'top' ? { top: '-6%', left: pos + '%' }
+    : edge === 'bottom' ? { bottom: '-6%', left: pos + '%' }
+    : edge === 'left' ? { left: '-6%', top: pos + '%' }
+    : { right: '-6%', top: pos + '%' };
+  const base = { position: 'absolute', borderRadius: '50%', animationDelay: delay + 's', animationDuration: dur + 's', '--dx': dx + 'px', '--dy': dy + 'px', ...edgePos };
+  if (variant === 'ember') return { ...base, width: 8, height: 8, background: 'radial-gradient(circle,#fff8e8 0%,#ffb347 40%,#f0793a 70%,transparent 100%)', boxShadow: '0 0 12px 3px rgba(240,121,58,0.9)', animationName: 'particle-out', animationTimingFunction: 'ease-out', animationIterationCount: 'infinite' };
+  if (variant === 'ash') return { ...base, width: 4, height: 4, background: 'rgba(210,206,198,0.75)', boxShadow: '0 0 4px 1px rgba(210,206,198,0.4)', animationName: 'particle-out', animationTimingFunction: 'ease-out', animationIterationCount: 'infinite' };
+  if (variant === 'leaf') return { ...base, width: 10, height: 10, background: 'linear-gradient(135deg,#e7f7d8 0%,#7fbb6a 50%,#375c3a 100%)', borderRadius: '0% 60% 0% 60%', boxShadow: '0 0 10px 2px rgba(111,187,95,0.7)', animationName: 'particle-out', animationTimingFunction: 'ease-in-out', animationIterationCount: 'infinite' };
+  if (variant === 'moss') return { ...base, width: 4, height: 4, background: 'rgba(122,150,96,0.7)', boxShadow: '0 0 5px 1px rgba(122,150,96,0.4)', animationName: 'particle-out', animationTimingFunction: 'ease-in-out', animationIterationCount: 'infinite' };
+  return { ...base, width: 20, height: 20, background: 'radial-gradient(circle,rgba(255,255,255,0.9) 0%,rgba(220,220,220,0.45) 55%,transparent 100%)', boxShadow: '0 0 10px 3px rgba(180,180,180,0.3)', filter: 'blur(1.2px)', animationName: 'smoke-out', animationTimingFunction: 'ease-out', animationIterationCount: 'infinite' };
+}
+
+function bar(pct, accent) {
+  return `linear-gradient(to right, ${accent} ${pct}, rgba(244,242,238,0.16) 0)`;
+}
+
+/* Pack: "glass" — bright, crystalline, premium; the catalog's media/finance/luxury
+   pack, matching this monochrome editorial brand and its frosted-glass surfaces. */
+const SFX_PACK = 'glass';
+const SOUND_KEY = 'rd-portfolio-sound';
+
+function readSoundPref() {
+  try { const v = localStorage.getItem(SOUND_KEY); return v === null ? true : v === 'on'; }
+  catch (e) { return true; }
+}
+function writeSoundPref(on) {
+  try { localStorage.setItem(SOUND_KEY, on ? 'on' : 'off'); } catch (e) {}
+}
+
+const PALETTES = {
+  Ink: { accent: '#f4f2ee', accentStrong: '#d8d4cc', tint: 'rgba(244,242,238,0.06)' },
+  Graphite: { accent: '#c9c4bc', accentStrong: '#ffffff', tint: 'rgba(244,242,238,0.07)' },
+};
+
+const WORK_DATA = [
+  { glow: '239,125,61', particleType: 'v9', particleList: V9_PARTICLES, img: 'assets/projects/v9.png', imgAlt: 'V9 Gastrobar homepage screenshot', meta: 'V9 Gastrobar — 2026', title: 'Open-flame kitchen, late-night bar', desc: 'A single-page site for a coal-grill kitchen and bar, built around a live ember canvas animation and scroll-reveal menu sections.', tags: ['Canvas Animation', 'Scroll Reveal', 'Vanilla JS'], siteUrl: 'https://rumanddd.github.io/v9-website/', codeUrl: 'https://github.com/rumanddd/v9-website', rotate: -1.2, width: '68%', align: 'flex-start', marginTop: 0 },
+  { glow: '176,141,87', particleType: 'moss', particleList: MOSS_PARTICLES, img: 'uploads/Gemini_Generated_Image_mayr8bmayr8bmayr.jpg', imgAlt: 'Savore restaurant website homepage screenshot', meta: 'Savore — Restaurant Website', title: 'A refined, immersive dining showcase', desc: 'A restaurant site built around atmosphere — full-bleed interior photography, a cinematic featured-project carousel and a quiet editorial type system.', tags: ['Web Design', 'Art Direction', 'Vanilla JS'], siteUrl: 'https://claude.ai/code/artifact/76d362ea-a5a8-4337-a8d4-801ab1bd818e?org=db02bb0e-59ca-492e-b4f9-b0509ca08f11', codeUrl: 'https://claude.ai/code/artifact/76d362ea-a5a8-4337-a8d4-801ab1bd818e?org=db02bb0e-59ca-492e-b4f9-b0509ca08f11', rotate: 1, width: '68%', align: 'flex-end', marginTop: -16 },
+  { glow: '20,54,200', particleType: 'velocity', particleList: VELOCITY_PARTICLES, img: 'assets/projects/listen-sideways.png', imgAlt: 'Listen Sideways homepage screenshot', meta: 'Listen Sideways — Open Listening Club', title: 'Editorial landing page for a listening club', desc: 'A poster-style landing page for an open listening session, built around a mouse-reactive 3D product stage, proximity glow and a scrolling field-note marquee.', tags: ['React', 'Interaction Design', 'Web Audio'], siteUrl: 'https://rumanddd.github.io/Listen-Sideways/', codeUrl: 'https://github.com/rumanddd/Listen-Sideways', rotate: 0, width: '62%', align: 'center', marginTop: 8 },
+];
+
+const SKILL_GROUPS = [
+  { title: 'Frontend Development', skills: [['HTML','100%','Experienced'],['CSS','100%','Experienced'],['JavaScript','40%','Basic'],['TypeScript','40%','Basic'],['Material UI','60%','Intermediate']] },
+  { title: 'Visual Development', skills: [['Design','100%','Experienced'],['UI','60%','Intermediate'],['UX','60%','Intermediate'],['Git','60%','Intermediate']] },
+  { title: 'AI & Automation', skills: [['AI Integration','100%','Experienced'],['Workflow Automation','100%','Experienced'],['Prompt Engineering','100%','Experienced'],['Business Process Design','60%','Intermediate']] },
+];
+
+class Component extends DCLogic {
+  state = { hoveredWork: null, lightbox: null, reelMuted: true, reelPlaying: true, soundOn: readSoundPref(), loaded: false, scrubSound: false };
+  videoRef = React.createRef();
+  preloadRef = React.createRef();
+  preloadBarRef = React.createRef();
+  preloadCaretRef = React.createRef();
+  preloadAudioRef = React.createRef();
+  hudScrollRef = React.createRef();
+  hudSizeRef = React.createRef();
+  scrubCanvasRef = React.createRef();
+  scrubVideoRef = React.createRef();
+  scrubBarRef = React.createRef();
+  scrubFrameRef = React.createRef();
+  scrubPctRef = React.createRef();
+  scrubCap0Ref = React.createRef();
+  scrubCap1Ref = React.createRef();
+  scrubCap2Ref = React.createRef();
+  spotlightRef = React.createRef();
+  cursorRingRef = React.createRef();
+  cursorDotRef = React.createRef();
+  bgLinesSlowRef = React.createRef();
+  bgLinesFastRef = React.createRef();
+  bgBandRef = React.createRef();
+  progressRef = React.createRef();
+  waveRef = React.createRef();
+  mouseNX = 0.5;
+  mouseNY = 0.5;
+  pxBgRef = React.createRef();
+  pxMidRef = React.createRef();
+  pxLinesRef = React.createRef();
+  pxFgRef = React.createRef();
+  ui = null;
+  loops = {};
+  lastCue = {};
+
+  componentDidMount() {
+    const v = this.videoRef.current;
+    if (v) { v.muted = true; v.volume = 1; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+
+    if (!this.ui && typeof window !== 'undefined' && window.createUISFX) {
+      this.ui = window.createUISFX({ pack: SFX_PACK, volume: 0.7, enabled: this.state.soundOn });
+    }
+
+    this.finePointer = typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(hover: hover) and (pointer: fine)').matches : false;
+
+    this.onScroll = () => {
+      if (this.rafPending) return;
+      this.rafPending = true;
+      requestAnimationFrame(() => {
+        this.rafPending = false;
+        const host = this.pxFgRef.current && this.pxFgRef.current.parentElement;
+        if (!host) return;
+        const r = host.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        const p = Math.max(-1.2, Math.min(1.2, ((vh / 2) - (r.top + r.height / 2)) / vh));
+        const set = (ref, mult) => { const el = ref.current; if (el) el.style.transform = 'translate3d(0,' + (p * mult).toFixed(2) + 'px,0)'; };
+        set(this.pxBgRef, 130);
+        set(this.pxMidRef, 84);
+        set(this.pxLinesRef, 44);
+        set(this.pxFgRef, -34);
+      });
+    };
+    this.writeHud = () => {
+        const doc = document.documentElement;
+        const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+        const pct = Math.round(Math.min(1, Math.max(0, window.scrollY / max)) * 100);
+        if (this.hudScrollRef.current) this.hudScrollRef.current.textContent = String(pct).padStart(3, '0') + '%';
+        if (this.hudSizeRef.current) this.hudSizeRef.current.textContent = window.innerWidth + 'x' + window.innerHeight;
+        this.writeParallax();
+    };
+    this.onHud = () => {
+      if (this.hudPending) return;
+      this.hudPending = true;
+      requestAnimationFrame(() => { this.hudPending = false; this.writeHud(); });
+    };
+    this.writeHud();
+    setTimeout(() => { this.writeHud(); this.writeParallax(); }, 60);
+    window.addEventListener('scroll', this.onHud, { passive: true });
+    window.addEventListener('resize', this.onHud, { passive: true });
+    this.onHud();
+
+    const audio = this.preloadAudioRef.current;
+    if (audio) { audio.volume = 0.85; const ap = audio.play(); if (ap && ap.catch) ap.catch(() => {}); }
+
+    const FLICKER_MS = 500, COUNT_MS = 3900;
+    const t0 = performance.now() + FLICKER_MS, dur = COUNT_MS;
+    const tick = (now) => {
+      if (now < t0) { this.preloadRaf = requestAnimationFrame(tick); return; }
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 2.2);
+      const n = Math.round(eased * 100);
+      if (this.preloadRef.current) this.preloadRef.current.textContent = String(n).padStart(3, '0');
+      if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = n + '%';
+      if (p < 1) { this.preloadRaf = requestAnimationFrame(tick); }
+      else { this.preloadRaf = null; this.finishPreload(280); }
+    };
+    this.preloadRaf = requestAnimationFrame(tick);
+    this.preloadFallback = setTimeout(() => this.finishPreload(0), 4600);
+    this.startReveals();
+
+    if (window.Lenis) {
+      this.lenis = new window.Lenis({ lerp: 0.09, anchors: true });
+      const lraf = (t) => { this.lenis.raf(t); this.lenisRaf = requestAnimationFrame(lraf); };
+      this.lenisRaf = requestAnimationFrame(lraf);
+    }
+    this.applyMotion();
+    if (this.finePointer) this.initPointerFX();
+    this.initGlow();
+    this.initWave();
+    this.armWhoosh = () => {
+      if (this.state.soundOn) this.startWhoosh();
+      window.removeEventListener('pointerdown', this.armWhoosh);
+      window.removeEventListener('keydown', this.armWhoosh);
+    };
+    window.addEventListener('pointerdown', this.armWhoosh);
+    window.addEventListener('keydown', this.armWhoosh);
+    this.initWorkFX();
+    this.initScrub();
+
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  /* Apple-style scroll scrubbing: reel decoded into a canvas, seek driven by scroll. */
+  initScrub() {
+    const video = this.scrubVideoRef.current;
+    const canvas = this.scrubCanvasRef.current;
+    if (!video || !canvas) return;
+    const section = canvas.closest('#reel-scrub');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    video.muted = true;
+    this.scrubTime = 0;
+    this.scrubShown = -1;
+    this.scrubCaps = [this.scrubCap0Ref, this.scrubCap1Ref, this.scrubCap2Ref];
+
+    const sizeCanvas = () => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+    };
+    sizeCanvas();
+    this.onScrubResize = () => { sizeCanvas(); this.scrubDirty = true; };
+    window.addEventListener('resize', this.onScrubResize, { passive: true });
+
+    const draw = () => {
+      if (!video.videoWidth) return;
+      const cw = canvas.width, ch = canvas.height;
+      const scale = Math.max(cw / video.videoWidth, ch / video.videoHeight);
+      const dw = video.videoWidth * scale, dh = video.videoHeight * scale;
+      ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    };
+
+    const progress = () => {
+      if (!section) return 0;
+      const r = section.getBoundingClientRect();
+      const span = Math.max(1, r.height - window.innerHeight);
+      return Math.min(1, Math.max(0, -r.top / span));
+    };
+
+    const setCaption = (p) => {
+      const idx = p < 0.34 ? 0 : (p < 0.68 ? 1 : 2);
+      if (idx === this.scrubShown) return;
+      this.scrubShown = idx;
+      this.scrubCaps.forEach((ref, i) => { if (ref.current) ref.current.style.opacity = i === idx ? '1' : '0'; });
+    };
+
+    const loop = () => {
+      this.scrubRaf = requestAnimationFrame(loop);
+      if (!section) return;
+      const r = section.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > window.innerHeight + 100) {
+        if (this.state.scrubSound && !video.paused) video.pause();
+        return;
+      }
+      if (this.state.scrubSound && video.paused) { const pk = video.play(); if (pk && pk.catch) pk.catch(() => {}); }
+      const p = progress();
+      const dur = video.duration;
+      if (dur && isFinite(dur) && !this.state.scrubSound) {
+        const target = p * (dur - 0.05);
+        this.scrubTime += (target - this.scrubTime) * 0.12;
+        if (Math.abs(video.currentTime - this.scrubTime) > 0.02 && video.readyState >= 2) {
+          try { video.currentTime = this.scrubTime; } catch (e) {}
+        }
+        if (this.scrubFrameRef.current) this.scrubFrameRef.current.textContent = 'frame ' + String(Math.round(this.scrubTime * 24)).padStart(3, '0');
+      } else if (this.state.scrubSound && this.scrubFrameRef.current) {
+        this.scrubFrameRef.current.textContent = 'frame ' + String(Math.round(video.currentTime * 24)).padStart(3, '0');
+      }
+      if (this.scrubPctRef.current) this.scrubPctRef.current.textContent = String(Math.round(p * 100)).padStart(3, '0') + '%';
+      if (this.scrubBarRef.current) this.scrubBarRef.current.style.width = (p * 100).toFixed(1) + '%';
+      setCaption(p);
+      draw();
+    };
+
+    const start = () => { if (!this.scrubRaf) loop(); };
+    if (video.readyState >= 2) start();
+    else video.addEventListener('loadeddata', () => { start(); draw(); }, { once: true });
+    video.addEventListener('seeked', draw);
+    const kick = video.play();
+    if (kick && kick.then) kick.then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+  }
+
+  writeParallax() {
+    const y = window.scrollY;
+    const amp = this.motionAmp();
+    const mod = (v, m) => ((v % m) + m) % m;
+    const mx = (this.mouseNX - 0.5) * amp;
+    const my = (this.mouseNY - 0.5) * amp;
+    if (this.bgLinesSlowRef.current) this.bgLinesSlowRef.current.style.transform = 'translate3d(' + (mx * 26).toFixed(1) + 'px,' + (-mod(y * 0.08, 340) + my * 10).toFixed(1) + 'px,0)';
+    if (this.bgLinesFastRef.current) this.bgLinesFastRef.current.style.transform = 'translate3d(' + (mx * -48).toFixed(1) + 'px,' + (-mod(y * 0.22, 1040) + my * 22).toFixed(1) + 'px,0)';
+    if (this.bgBandRef.current) this.bgBandRef.current.style.transform = 'translate3d(' + (mx * 60).toFixed(1) + 'px,' + (-(y * 0.16) + my * 14).toFixed(1) + 'px,0)';
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (this.progressRef.current) this.progressRef.current.style.width = ((y / Math.max(1, max)) * 100).toFixed(2) + '%';
+
+    const sy = y / Math.max(1, window.innerHeight);
+    if (!this.heroCol) this.heroCol = document.querySelector('#profile .hero-grid > div:not(.hero-sep):not(.hero-card)');
+    if (!this.heroCard) this.heroCard = document.querySelector('#profile .hero-card');
+    if (this.heroCol && this.heroReady) {
+      this.heroCol.style.transform = 'translate3d(0,' + (sy * -170 * amp).toFixed(1) + 'px,0)';
+      this.heroCol.style.opacity = String(Math.max(0, 1 - sy * 1.15));
+    }
+    if (this.heroCard && this.heroReady) {
+      const ry = mx * 13, rx = -my * 9;
+      this.heroCard.style.transform = 'perspective(1100px) translate3d(0,' + (sy * -80 * amp).toFixed(1) + 'px,0) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg) scale(' + Math.max(0.86, 1 - sy * 0.09 * amp).toFixed(3) + ')';
+      this.heroCard.style.opacity = String(Math.max(0, 1 - sy * 1.05));
+    }
+  }
+
+  motionAmp() {
+    const m = this.props.motion ?? 'Balanced';
+    return m === 'Still' ? 0 : m === 'Kinetic' ? 1.9 : 1;
+  }
+
+  applyMotion() {
+    const m = this.props.motion ?? 'Balanced';
+    const r = document.documentElement.style;
+    r.setProperty('--marquee-dur', m === 'Kinetic' ? '16s' : m === 'Still' ? '60s' : '30s');
+    r.setProperty('--spin-dur', m === 'Kinetic' ? '13s' : m === 'Still' ? '60s' : '26s');
+  }
+
+  /* Cursor-proximity border glow (silver), ported from the headphones piece. */
+  initGlow() {
+    if (!this.finePointer) return;
+    const TINT = 'rgba(226,232,240,0.5)';
+    const REACH = 300;
+    const surfaces = Array.prototype.slice.call(document.querySelectorAll('.hero-card, .work-item, .skills-row > div, .cert-thumb, [data-magnetic]'));
+    surfaces.forEach((el) => {
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      const layer = document.createElement('span');
+      layer.setAttribute('aria-hidden', 'true');
+      layer.style.cssText = 'position:absolute;inset:0;opacity:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;transition:opacity 220ms ease;z-index:0;';
+      el.appendChild(layer);
+      el._glowLayer = layer;
+    });
+    const lines = Array.prototype.slice.call(document.querySelectorAll('.nav-links a, #contact a'));
+    this.onGlowMove = (e) => {
+      const amp = this.motionAmp();
+      surfaces.forEach((el) => {
+        const layer = el._glowLayer;
+        if (!layer) return;
+        if (amp === 0) { layer.style.opacity = '0'; el.style.boxShadow = ''; return; }
+        const r = el.getBoundingClientRect();
+        if (!r.width) return;
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top, Math.min(e.clientY, r.bottom));
+        const k = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / REACH);
+        layer.style.opacity = (k * k * 0.9).toFixed(3);
+        if (k > 0) {
+          const px = ((e.clientX - r.left) / r.width) * 100;
+          const py = ((e.clientY - r.top) / r.height) * 100;
+          layer.style.backgroundImage = 'radial-gradient(circle at ' + px.toFixed(1) + '% ' + py.toFixed(1) + '%, ' + TINT + ', transparent 62%)';
+          el.style.boxShadow = '0 0 ' + (34 * k * k).toFixed(1) + 'px rgba(226,232,240,' + (0.3 * k * k).toFixed(3) + ')';
+        } else {
+          el.style.boxShadow = '';
+        }
+      });
+      lines.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (!r.width) return;
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top, Math.min(e.clientY, r.bottom));
+        const k = Math.max(0, 1 - Math.hypot(e.clientX - cx, e.clientY - cy) / 180);
+        el.style.textShadow = k > 0 ? '0 0 ' + (14 * k * k).toFixed(1) + 'px rgba(226,232,240,' + (0.75 * k * k).toFixed(3) + ')' : '';
+      });
+    };
+    window.addEventListener('mousemove', this.onGlowMove, { passive: true });
+  }
+
+  /* Live sine waveform in the contact section. */
+  initWave() {
+    let t = 0;
+    const tick = () => {
+      this.waveRaf = requestAnimationFrame(tick);
+      const path = this.waveRef.current;
+      if (!path) return;
+      const amp = this.motionAmp();
+      t += 0.02 * (amp || 0.25);
+      let d = 'M0,150';
+      for (let x = 0; x <= 1200; x += 20) {
+        const y = 150 + Math.sin(x * 0.012 + t * 3) * 40 * Math.sin((x / 1200) * Math.PI) * (amp || 0.4);
+        d += ' L' + x + ',' + y.toFixed(1);
+      }
+      path.setAttribute('d', d);
+    };
+    tick();
+  }
+
+  /* Filtered white-noise whoosh whose gain + cutoff track pointer velocity. */
+  initWhoosh() {
+    if (this.whoosh || !this.finePointer) return null;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const ctx = new AC();
+    const len = Math.floor(ctx.sampleRate * 2);
+    const buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.99765 * b0 + w * 0.099;
+      b1 = 0.963 * b1 + w * 0.2965;
+      b2 = 0.57 * b2 + w * 1.0526;
+      data[i] = (b0 + b1 + b2 + w * 0.1848) * 0.16;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.loop = true;
+    const band = ctx.createBiquadFilter();
+    band.type = 'bandpass';
+    band.frequency.value = 420;
+    band.Q.value = 0.7;
+    const hp = ctx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = 220;
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    src.connect(band); band.connect(hp); hp.connect(gain); gain.connect(ctx.destination);
+    src.start();
+    this.whoosh = { ctx, gain, band, hp, level: 0 };
+    return this.whoosh;
+  }
+
+  startWhoosh() {
+    const w = this.initWhoosh();
+    if (!w) return;
+    if (w.ctx.state === 'suspended') w.ctx.resume();
+    if (this.whooshMove) return;
+    let lx = null, ly = null, lt = 0, vel = 0;
+    this.whooshMove = (e) => {
+      const now = performance.now();
+      if (lx !== null) {
+        const dt = Math.max(8, now - lt);
+        const d = Math.hypot(e.clientX - lx, e.clientY - ly);
+        vel = Math.max(vel, Math.min(1, (d / dt) / 3.2));
+      }
+      lx = e.clientX; ly = e.clientY; lt = now;
+      this.whooshVel = vel;
+      vel *= 0.86;
+    };
+    window.addEventListener('pointermove', this.whooshMove, { passive: true });
+    const tick = () => {
+      this.whooshRaf = requestAnimationFrame(tick);
+      const ww = this.whoosh;
+      if (!ww) return;
+      const target = this.state.soundOn ? (this.whooshVel || 0) : 0;
+      // fast attack, quick release so stopping the mouse silences it right away
+      ww.level += (target - ww.level) * (target > ww.level ? 0.35 : 0.22);
+      this.whooshVel = (this.whooshVel || 0) * 0.82;
+      const t = ww.ctx.currentTime;
+      ww.gain.gain.setTargetAtTime(Math.pow(ww.level, 1.6) * 0.085, t, 0.02);
+      ww.band.frequency.setTargetAtTime(380 + ww.level * 2600, t, 0.05);
+      ww.hp.frequency.setTargetAtTime(200 + ww.level * 700, t, 0.05);
+    };
+    tick();
+  }
+
+  stopWhoosh() {
+    if (this.whooshRaf) { cancelAnimationFrame(this.whooshRaf); this.whooshRaf = null; }
+    if (this.whooshMove) { window.removeEventListener('pointermove', this.whooshMove); this.whooshMove = null; }
+    if (this.whoosh) {
+      const t = this.whoosh.ctx.currentTime;
+      this.whoosh.gain.gain.setTargetAtTime(0, t, 0.04);
+      this.whoosh.level = 0;
+      setTimeout(() => { if (this.whoosh && !this.state.soundOn) this.whoosh.ctx.suspend(); }, 260);
+    }
+  }
+
+  smoothTo(el) {
+    if (this.lenis) this.lenis.scrollTo(el, { duration: 1.4 });
+    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+  }
+
+  /* Cursor follower, hero spotlight, magnetic buttons — fine pointers only. */
+  initPointerFX() {
+    const ring = this.cursorRingRef.current, dot = this.cursorDotRef.current, spot = this.spotlightRef.current;
+    let mx = -100, my = -100, rx = -100, ry = -100, sx = -100, sy = -100, seen = false, hoverEl = null;
+    this.onPtrMove = (e) => {
+      mx = e.clientX; my = e.clientY;
+      this.mouseNX = e.clientX / window.innerWidth;
+      this.mouseNY = e.clientY / window.innerHeight;
+      if (!seen) { seen = true; if (ring) ring.style.opacity = '1'; if (dot) dot.style.opacity = '1'; if (spot) spot.style.opacity = '1'; }
+    };
+    this.onPtrOver = (e) => {
+      const t = e.target.closest && e.target.closest('a, button, [data-magnetic], .work-wrapper');
+      if (t === hoverEl) return;
+      hoverEl = t;
+      if (!ring) return;
+      if (t) { ring.style.width = '58px'; ring.style.height = '58px'; ring.style.margin = '-29px 0 0 -29px'; }
+      else { ring.style.width = '34px'; ring.style.height = '34px'; ring.style.margin = '-17px 0 0 -17px'; }
+    };
+    document.addEventListener('pointermove', this.onPtrMove, { passive: true });
+    document.addEventListener('pointerover', this.onPtrOver, { passive: true });
+    const loop = () => {
+      this.ptrRaf = requestAnimationFrame(loop);
+      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+      sx += (mx - sx) * 0.06; sy += (my - sy) * 0.06;
+      if (ring) ring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0)';
+      if (dot) dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+      this.writeParallax();
+      if (spot) spot.style.background = 'radial-gradient(520px at ' + sx.toFixed(0) + 'px ' + sy.toFixed(0) + 'px, rgba(244,242,238,0.055) 0%, rgba(244,242,238,0.018) 38%, transparent 68%)';
+    };
+    loop();
+    this.magnets = [];
+    document.querySelectorAll('[data-magnetic]').forEach((el) => {
+      el.style.willChange = 'transform';
+      const move = (e) => {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        el.style.transition = 'transform 60ms linear';
+        el.style.transform = 'translate(' + (dx * 0.26).toFixed(1) + 'px,' + (dy * 0.32).toFixed(1) + 'px)';
+      };
+      const leave = () => {
+        el.style.transition = 'transform 480ms cubic-bezier(0.22,1.4,0.36,1)';
+        el.style.transform = 'translate(0,0)';
+      };
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerleave', leave);
+      this.magnets.push({ el, move, leave });
+    });
+  }
+
+  /* Work cards: scale-in reveal, velocity skew, inner image parallax. */
+  initWorkFX() {
+    const list = document.querySelector('.work-list');
+    const wrappers = Array.prototype.slice.call(document.querySelectorAll('.work-wrapper'));
+    wrappers.forEach((el) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(56px) scale(0.95)';
+      el.style.transition = 'opacity 1100ms cubic-bezier(0.16,0.84,0.24,1), transform 1100ms cubic-bezier(0.16,0.84,0.24,1)';
+    });
+    if ('IntersectionObserver' in window) {
+      this.workIo = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          this.workIo.unobserve(e.target);
+        });
+      }, { threshold: 0.12 });
+      wrappers.forEach((el) => this.workIo.observe(el));
+    } else {
+      wrappers.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    }
+    let lastY = window.scrollY, skew = 0;
+    this.onWorkScroll = () => {
+      const y = window.scrollY;
+      const v = y - lastY; lastY = y;
+      skew += (Math.max(-4, Math.min(4, v * 0.05)) - skew) * 0.12;
+      if (list && Math.abs(skew) > 0.01) list.style.transform = 'skewY(' + skew.toFixed(3) + 'deg)';
+      else if (list) list.style.transform = '';
+      document.querySelectorAll('.work-item [role="img"]').forEach((img) => {
+        const r = img.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+        img.style.backgroundPosition = 'center ' + (50 + p * -14).toFixed(1) + '%';
+      });
+    };
+    window.addEventListener('scroll', this.onWorkScroll, { passive: true });
+  }
+
+  finishPreload(delay) {
+    if (this.preloadDone) return;
+    this.preloadDone = true;
+    clearTimeout(this.preloadFallback);
+    if (this.preloadRaf) { cancelAnimationFrame(this.preloadRaf); this.preloadRaf = null; }
+    const done = () => {
+      if (this.preloadRef.current) this.preloadRef.current.textContent = '100';
+      if (this.preloadBarRef.current) this.preloadBarRef.current.style.width = '100%';
+      const a = this.preloadAudioRef.current;
+      if (a && !a.paused) {
+        const fade = setInterval(() => {
+          a.volume = Math.max(0, a.volume - 0.06);
+          if (a.volume <= 0.01) { clearInterval(fade); a.pause(); }
+        }, 60);
+      }
+      this.sfx('open');
+      this.setState({ loaded: true });
+      this.startReveals();
+      this.revealSafety = setTimeout(() => {
+        document.querySelectorAll('[data-reveal]:not([data-revealed])').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.setAttribute('data-revealed', '1');
+        });
+      }, 1200);
+      setTimeout(() => {
+        this.heroReady = true;
+        [this.heroCol, this.heroCard].forEach((el) => { if (el) el.style.transition = 'none'; });
+        this.writeParallax();
+      }, 3600);
+    };
+    if (delay) this.preloadFinishTimer = setTimeout(done, delay); else done();
+  }
+
+  startReveals() {
+    if (this.io) { this.io.disconnect(); this.io = null; }
+    const els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]:not([data-revealed])'));
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; el.setAttribute('data-revealed', '1'); });
+      return;
+    }
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        e.target.setAttribute('data-revealed', '1');
+        if (this.io) this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+    els.forEach((el, i) => { const d = el.getAttribute('data-reveal-delay'); el.style.transitionDelay = (d ? d : (i % 3) * 110) + 'ms'; el.addEventListener('transitionend', () => { el.style.transitionDelay = '0ms'; }, { once: true }); this.io.observe(el); });
+  }
+
+  componentWillUnmount() {
+    this.preloadDone = false;
+    clearTimeout(this.revealSafety);
+    if (this.preloadRaf) cancelAnimationFrame(this.preloadRaf);
+    clearTimeout(this.preloadFallback);
+    clearTimeout(this.preloadFinishTimer);
+    if (this.typeTimers) this.typeTimers.forEach(clearTimeout);
+    if (this.scrubRaf) cancelAnimationFrame(this.scrubRaf);
+    if (this.onScrubResize) window.removeEventListener('resize', this.onScrubResize);
+    if (this.lenisRaf) cancelAnimationFrame(this.lenisRaf);
+    if (this.lenis) this.lenis.destroy();
+    if (this.ptrRaf) cancelAnimationFrame(this.ptrRaf);
+    if (this.waveRaf) cancelAnimationFrame(this.waveRaf);
+    this.stopWhoosh();
+    if (this.whoosh) { this.whoosh.ctx.close(); this.whoosh = null; }
+    if (this.armWhoosh) { window.removeEventListener('pointerdown', this.armWhoosh); window.removeEventListener('keydown', this.armWhoosh); }
+    if (this.onGlowMove) window.removeEventListener('mousemove', this.onGlowMove);
+    if (this.onPtrMove) document.removeEventListener('pointermove', this.onPtrMove);
+    if (this.onPtrOver) document.removeEventListener('pointerover', this.onPtrOver);
+    if (this.workIo) this.workIo.disconnect();
+    if (this.onWorkScroll) window.removeEventListener('scroll', this.onWorkScroll);
+    if (this.magnets) this.magnets.forEach(m => { m.el.removeEventListener('pointermove', m.move); m.el.removeEventListener('pointerleave', m.leave); });
+    if (this.io) this.io.disconnect();
+    window.removeEventListener('scroll', this.onHud);
+    window.removeEventListener('resize', this.onHud);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    this.stopLoops();
+    if (this.ui) { this.ui.stopAll(); this.ui.destroy(); this.ui = null; }
+  }
+
+  stopLoops() {
+    Object.keys(this.loops).forEach(k => { const h = this.loops[k]; if (h) h.stop(); delete this.loops[k]; });
+  }
+
+  /* One cue per interaction, throttled per cue name. */
+  sfx(cue, opts) {
+    if (!this.ui || !this.state.soundOn) return null;
+    const gap = (opts && opts.throttle) || 0;
+    if (gap) {
+      const now = Date.now();
+      if (this.lastCue[cue] && now - this.lastCue[cue] < gap) return null;
+      this.lastCue[cue] = now;
+    }
+    return this.ui.play(cue, opts);
+  }
+
+  renderVals() {
+    const loaded = this.state.loaded;
+    const hovered = this.state.hoveredWork;
+    const theme = PALETTES[this.props.accentMood] || PALETTES.Ink;
+    const isGrid = this.props.workLayout === 'Grid';
+    const isCalm = this.props.energy === 'Calm';
+
+    const workItems = WORK_DATA.map((w, i) => {
+      const isHover = hovered === i;
+      const scaleUp = isCalm ? 1.015 : 1.035;
+      const liftY = isCalm ? -2 : -4;
+      const baseShadow = isCalm ? '0 1px 2px rgba(10,10,10,0.05)' : '0 10px 30px -18px rgba(10,10,10,0.28)';
+      const hoverShadow = isCalm ? '0 4px 10px rgba(10,10,10,0.08)' : '0 18px 44px -18px rgba(10,10,10,0.4)';
+      const rotate = isGrid ? 0 : w.rotate;
+      const side = w.align === 'flex-end' ? 'left' : 'right';
+      return {
+        ...w,
+        onEnter: () => { if (this.finePointer) this.sfx('hover', { volume: 0.5, throttle: 140 }); this.setState({ hoveredWork: i }); },
+        onLeave: () => this.setState({ hoveredWork: null }),
+        wrapperStyle: {
+          position: 'relative',
+          alignSelf: isGrid ? 'stretch' : w.align, width: isGrid ? '100%' : w.width, marginTop: isGrid ? 0 : w.marginTop,
+        },
+        itemStyle: {
+          position: 'relative', borderRadius: 3, overflow: 'hidden', border: '1px solid rgba(244,242,238,0.16)', background: '#0b0b0b',
+          boxShadow: isHover ? hoverShadow : baseShadow,
+          transform: `rotate(${rotate}deg) translateY(${isHover ? liftY : 0}px)`,
+          transition: 'box-shadow 400ms ease, transform 400ms ease',
+        },
+        glowOverlayStyle: { display: 'none' },
+        imgStyle: { width: '100%', height: '100%', backgroundImage: `url(${w.img})`, backgroundSize: w.fit || 'cover', backgroundPosition: w.fit ? 'center' : 'top center', backgroundRepeat: 'no-repeat', display: 'block',  transform: isHover ? `scale(${scaleUp})` : 'scale(1)', transition: 'transform 500ms ease, filter 500ms ease' },
+        labelStyle: { position: 'absolute', left: 0, bottom: 0, zIndex: 3, background: 'rgba(11,11,11,0.5)', backdropFilter: 'blur(18px) saturate(130%)', color: '#f4f2ee', padding: '14px 20px', borderTop: '1px solid rgba(244,242,238,0.16)', borderRight: '1px solid rgba(244,242,238,0.16)', maxWidth: '80%' },
+        panelStyle: {
+          position: 'absolute', top: 0, bottom: 0, width: 320, zIndex: 2,
+          [side === 'right' ? 'left' : 'right']: 'calc(100% + 24px)',
+          background: 'rgba(18,19,22,0.55)', backdropFilter: 'blur(24px) saturate(140%)', border: '1px solid rgba(244,242,238,0.16)', boxShadow: '0 30px 70px -30px rgba(0,0,0,0.85), inset 0 1px 0 rgba(244,242,238,0.08)', borderRadius: 2,
+          color: '#f4f2ee', padding: '30px 28px', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          opacity: isHover ? 1 : 0,
+          transform: isHover ? 'translateX(0)' : `translateX(${side === 'right' ? '-16px' : '16px'})`,
+          pointerEvents: 'auto',
+          transition: 'transform 400ms cubic-bezier(.4,0,.2,1), opacity 350ms ease',
+        },
+      };
+    });
+
+    const workListStyle = isGrid
+      ? { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', marginTop: '48px', alignItems: 'start' }
+      : { display: 'flex', flexDirection: 'column', gap: '56px', marginTop: '48px' };
+
+    const skillGroups = SKILL_GROUPS.map(g => ({
+      title: g.title,
+      skills: g.skills.map(([name, pct, level]) => ({ name, level, barBg: bar(pct, theme.accent) })),
+    }));
+
+    const eyebrowStyle = { fontFamily: "'Switzer','Helvetica Neue',sans-serif", fontSize: 13.6, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(244,242,238,0.5)', fontWeight: 400, margin: '0 0 14px' };
+    const iconGlyphStyle = { color: theme.accent };
+    const logoDotStyle = { color: theme.accent };
+    const badgeStyle = { display: 'inline-flex', alignItems: 'center', gap: 14.4, padding: '12px 24px 12px 14.4px', border: '1px solid rgba(244,242,238,0.3)', borderRadius: 2, background: theme.tint, marginBottom: 40 };
+    const badgeStrongStyle = { color: theme.accent, fontWeight: 700, fontSize: '1.4em', letterSpacing: '0.01em' };
+    const btnPrimaryStyle = { fontFamily: "'Switzer','Helvetica Neue',sans-serif", fontSize: 14.4, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '17px 32px', borderRadius: 2, border: `1px solid ${theme.accent}`, background: theme.accent, color: '#0b0b0b', cursor: 'pointer' };
+    const btnPrimaryHoverStyle = { background: theme.accentStrong, borderColor: theme.accentStrong };
+    const socialHoverStyle = { color: '#0b0b0b', background: theme.accent, borderColor: theme.accent, transform: 'translateY(-3px)' };
+    const scrollArrowHoverStyle = { color: theme.accent };
+    const workLinkStyle = { fontFamily: "'Switzer','Helvetica Neue',sans-serif", fontSize: 14.4, fontWeight: 500, letterSpacing: '0.06em', color: '#f4f2ee', borderBottom: `1px solid ${theme.accent}`, paddingBottom: 1.6 };
+    const workLinkHoverStyle = { color: theme.accent };
+    const closeHoverStyle = { color: '#0b0b0b', background: theme.accent, borderColor: theme.accent };
+    const contactLinkHoverStyle = { color: theme.accent };
+    const navLinkHoverStyle = { color: '#f4f2ee' };
+
+    return {
+      workItems, workListStyle, skillGroups,
+      eyebrowStyle, iconGlyphStyle, logoDotStyle, badgeStyle, badgeStrongStyle,
+      btnPrimaryStyle, btnPrimaryHoverStyle, socialHoverStyle, scrollArrowHoverStyle,
+      workLinkStyle, workLinkHoverStyle, closeHoverStyle, contactLinkHoverStyle, navLinkHoverStyle,
+      pxBgRef: this.pxBgRef, pxMidRef: this.pxMidRef, pxLinesRef: this.pxLinesRef, pxFgRef: this.pxFgRef,
+      soundOn: this.state.soundOn,
+      soundLabel: this.state.soundOn ? 'Sound on' : 'Sound off',
+      soundAriaLabel: this.state.soundOn ? 'Turn interface sound off' : 'Turn interface sound on',
+      soundBtnStyle: { display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: "'Switzer','Helvetica Neue',sans-serif", fontSize: 11.2, letterSpacing: '0.2em', textTransform: 'uppercase', whiteSpace: 'nowrap', flexShrink: 0, padding: '9px 15px', borderRadius: 2, border: '1px solid rgba(244,242,238,0.2)', background: 'rgba(244,242,238,0.05)', backdropFilter: 'blur(18px) saturate(130%)', color: this.state.soundOn ? '#f4f2ee' : 'rgba(244,242,238,0.5)', cursor: 'pointer', transition: 'color 200ms ease, border-color 200ms ease' },
+      soundBtnHoverStyle: { borderColor: 'rgba(244,242,238,0.45)', color: '#f4f2ee' },
+      soundDotStyle: { width: 6, height: 6, borderRadius: '50%', background: this.state.soundOn ? theme.accent : 'transparent', border: '1px solid ' + (this.state.soundOn ? theme.accent : 'rgba(244,242,238,0.4)'), transition: 'background 200ms ease' },
+      onSoundToggle: () => {
+        const next = !this.state.soundOn;
+        if (next) {
+          this.setState({ soundOn: true }, () => {
+            if (this.ui) { this.ui.setEnabled(true); this.ui.play('toggle-on', { force: true }); }
+            this.startWhoosh();
+          });
+        } else {
+          // audible confirmation first, then stop loops and mute for real
+          if (this.ui) this.ui.play('toggle-off', { force: true });
+          this.stopWhoosh();
+          this.stopLoops();
+          setTimeout(() => { if (this.ui) { this.ui.stopAll(); this.ui.setEnabled(false); } }, 340);
+          this.setState({ soundOn: false });
+        }
+        writeSoundPref(next);
+      },
+      onNavClick: () => this.sfx('forward', { throttle: 120 }),
+      onExternalClick: () => this.sfx('forward', { throttle: 120 }),
+      onContactClick: () => this.sfx('send'),
+      onViewWork: () => { this.sfx('forward'); const el = document.getElementById('projects'); if (el) this.smoothTo(el); },
+      onDownloadCv: () => this.sfx('press'),
+      videoRef: this.videoRef,
+      reelMuteLabel: this.state.reelMuted ? 'Unmute' : 'Mute',
+      reelPlayLabel: this.state.reelPlaying ? 'Pause' : 'Play',
+      reelBtnStyle: { fontFamily: "'Switzer','Helvetica Neue',sans-serif", fontSize: 12.8, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '10px 17px', borderRadius: 2, border: '1px solid rgba(244,242,238,0.32)', background: 'rgba(11,11,11,0.82)', backdropFilter: 'blur(8px)', color: '#f4f2ee', cursor: 'pointer' },
+      reelBtnHoverStyle: { background: theme.accent, borderColor: theme.accent, color: '#0b0b0b' },
+      toggleReelMute: () => {
+        const v = this.videoRef.current; if (!v) return;
+        const next = !v.muted; v.muted = next;
+        if (!next) { v.volume = 1; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        this.sfx('volume-change');
+        this.setState({ reelMuted: next, reelPlaying: !v.paused });
+      },
+      toggleReelPlay: () => {
+        const v = this.videoRef.current; if (!v) return;
+        if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); this.sfx('play'); this.setState({ reelPlaying: true }); }
+        else { v.pause(); this.sfx('pause'); this.setState({ reelPlaying: false }); }
+      },
+      certRowStyle: { display: 'flex', alignItems: 'center', gap: 14, padding: '10px 14px', borderRadius: 2, border: '1px solid rgba(244,242,238,0.16)', background: 'rgba(244,242,238,0.05)', backdropFilter: 'blur(20px) saturate(130%)', cursor: 'zoom-in', transition: 'border-color 200ms ease, transform 200ms ease' },
+      certRowHoverStyle: { borderColor: theme.accent, transform: 'translateX(3px)' },
+      lightboxOpen: !!this.state.lightbox,
+      spotlightRef: this.spotlightRef,
+      cursorRingRef: this.cursorRingRef,
+      cursorDotRef: this.cursorDotRef,
+      bgLinesSlowRef: this.bgLinesSlowRef,
+      bgLinesFastRef: this.bgLinesFastRef,
+      bgBandRef: this.bgBandRef,
+      progressRef: this.progressRef,
+      waveRef: this.waveRef,
+      scrubSoundOn: this.state.scrubSound,
+      scrubSoundLabel: this.state.scrubSound ? 'Sound Off' : 'Sound On',
+      toggleScrubSound: () => {
+        const v = this.scrubVideoRef.current; if (!v) return;
+        const next = !this.state.scrubSound;
+        this.sfx(next ? 'open' : 'close');
+        v.muted = !next;
+        if (next) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else { v.pause(); }
+        this.setState({ scrubSound: next });
+      },
+      scrubCanvasRef: this.scrubCanvasRef,
+      scrubVideoRef: this.scrubVideoRef,
+      scrubBarRef: this.scrubBarRef,
+      scrubFrameRef: this.scrubFrameRef,
+      scrubPctRef: this.scrubPctRef,
+      scrubCap0Ref: this.scrubCap0Ref,
+      scrubCap1Ref: this.scrubCap1Ref,
+      scrubCap2Ref: this.scrubCap2Ref,
+      preloadRef: this.preloadRef,
+      preloadBarRef: this.preloadBarRef,
+      preloadCaretRef: this.preloadCaretRef,
+      preloadAudioRef: this.preloadAudioRef,
+      hudScrollRef: this.hudScrollRef,
+      hudSizeRef: this.hudSizeRef,
+      preloaderStyle: {
+        position: 'fixed', inset: 0, zIndex: 2000, background: '#0b0b0b',
+        clipPath: loaded ? 'inset(0 0 100% 0)' : 'inset(0 0 0% 0)',
+        transition: 'clip-path 1100ms cubic-bezier(0.76,0,0.24,1)',
+        pointerEvents: loaded ? 'none' : 'auto',
+      },
+      lightboxSrc: this.state.lightbox ? this.state.lightbox.src : '',
+      lightboxImgStyle: { width: 'min(90vw,900px)', height: '85vh', backgroundImage: this.state.lightbox ? `url(${this.state.lightbox.src})` : 'none', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', borderRadius: 2, filter: 'drop-shadow(0 40px 100px rgba(0,0,0,0.6))' },
+      lightboxAlt: this.state.lightbox ? this.state.lightbox.alt : '',
+      closeLightbox: () => { this.sfx('close'); this.setState({ lightbox: null }); },
+      stopProp: (e) => e.stopPropagation(),
+      openCertLightbox1: () => { this.sfx('open'); this.setState({ lightbox: { src: 'assets/UI-UX.png', alt: 'UI-UX Certificate' } }); },
+      openCertLightbox2: () => { this.sfx('open'); this.setState({ lightbox: { src: 'assets/frontend-course.png', alt: 'Frontend Course Certificate' } }); },
+      openCertLightbox3: () => { this.sfx('open'); this.setState({ lightbox: { src: 'assets/masterd.png', alt: 'Masterd Certificate' } }); },
+      scrollToExperience: () => { this.sfx('forward'); const el = document.getElementById('experience'); if (el) this.smoothTo(el); },
+      scrollToProjects: () => { this.sfx('forward'); const el = document.getElementById('projects'); if (el) this.smoothTo(el); },
+      scrollToContact: () => { this.sfx('forward'); const el = document.getElementById('contact'); if (el) this.smoothTo(el); },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
